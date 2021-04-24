@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "TipoSerie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <h4>
+            <i style="margin-right:7px" class="fa fa-file-alt"></i> SERIE DE COMPROBANTES
+        </h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-file-alt"></i> TIPO SERIE</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group pull-right">
+            <button class="btn btn-info" id="btnNuevo" data-toggle="modal" data-target="#ModalNuevo"><i class="fa fa-plus"></i> Nueva Serie</button>
+        </div>
+    </div>
+</div>
+<div class="card cont">
+    <div class="table-responsive" id="dvCliente">
+        <table class="table table-striped table-bordered" style="width:100%" id="tbTipoDoc">
+            <thead>
+                <tr style="border:1px;">
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Serie</th>
+                    <th>Número</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @*------- MODAL --------------*@
+    <div class="modal fade animate__animated animate__fadeInDown" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Tipo</h5>
+                    <input type="hidden" id="hdfId" />
+                    <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                         
+                        <div class="row">
+                            <div class="col-lg-3 col-12">
+                                <label>Código</label>
+                                <div class="form-group">
+                                    <select class="form-control" style="width: 100%" id="lstCodigo" name="lstCodigo"> </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-12">
+                                <label>Nombre </label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtNombre">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <label>Serie</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtSerie">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <label>Número</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtNumero">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx"><i class="fa fa-times"></i> Cancelar</button>
+                        <button type="button" id="btnGrabar" class="btn btn-primary"><i class="fa fa-save"></i> Grabar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Mantenimiento/TipoSerie.js"></script>
+}

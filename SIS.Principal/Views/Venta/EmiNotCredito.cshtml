@@ -1,0 +1,542 @@
+﻿
+@{
+    ViewBag.Title = "Nota Credito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-page-title">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                <i style="margin-right:7px" class="fa fa-tags"></i> EMISION NOTA DE CREDITO
+            </h4>
+        </div>
+        <nav class="col-12" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-tags"></i> NOTA CREDITO</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Fecha de Operaci&oacute;n</label>
+                                <input id="txtFecOp" name="txtFecOp" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Tipo de Documento</label>
+                                <select id="lstDocumento" name="lstDocumento" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Serie (*)</label>
+                                <input id="txtSerie" name="txtSerie" class="form-control input-sm" maxlength="4" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <label>Numeraci&oacute;n (*)</label>
+                                <input id="txtNumero" name="txtNumero" class="form-control input-sm" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <br />
+                            <div class="form-group">
+                                <div class="position-relative form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" id="chekAlmacen" name="chekAlmacen" checked class="form-check-input"> Afecta Stock
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <label>Almacen</label>
+                                <select id="lstAlmacen" name="lstAlmacen" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <br />
+                            <div class="form-group">
+                                <div class="position-relative form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="chekAlmacen" name="postVenta" checked class="form-check-input" value="1"> POST
+                                    </label>
+                                </div>
+                                <div class="position-relative form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="chekAlmacen" name="postVenta" class="form-check-input" value="2">VENTA
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <label>Moneda</label>
+                                <select id="lstMoneda" name="lstMoneda" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Información del Cliente</h6>
+                    <hr />
+                    <div class="form-row">
+                        <input type="hidden" id="IdCliente" />
+                        <input type="hidden" id="IdVenta" />
+                        <input type="hidden" id="IdComprobante" />
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input type="hidden" id="idComprobantePago" />
+                                <label>Comprobante de Pago</label>
+                                <button id="buscarComprobante" class="btn btn-outline-success" data-toggle="modal" data-target="#ModalProducto"><i class="fa fa-dollar"></i> Seleccionar Comprobante </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Serie y N&uacute;mero de Documento</label>
+                                <input id="txtNumDocMod" name="txtNumDocMod" class="form-control input-sm" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Fecha de Emisi&oacute;n</label>
+                                <input id="txtFecEmision" name="txtFecEmision" class="form-control input-sm" disabled />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <input type="hidden" id="idCliMod" />
+                                <label>Tipo de Documento de Identidad</label>
+                                <input id="lstTipoDocCli" name="lstTipoDocCli" class="form-control input-sm" disabled />
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <label>N&uacute;mero de Documento de Identidad</label>
+                                <input id="txtDocCli" type="text" class="form-control" name="txtDocCli" disabled>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Apellidos y Nombres, Denominaci&oacute;n o Razón Social</label>
+                                <input id="txtNomCli" name="txtNomCli" class="form-control input-sm" disabled>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Direcci&oacute;n</label>
+                                <input id="txtDireccion" name="txtDireccion" class="form-control input-sm" disabled>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="">
+                <div class="main-card mb-5 card">
+                    <div class="card-body">
+                        <h6 class="c-grey-900">Tipo de Nota de Crédito</h6>
+                        <hr />
+
+                        <div class="card-header-tab card-header">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a role="tab" class="nav-link active" id="tab-c1-0" data-toggle="tab" href="#tab-animated1-0">
+                                        <span class="nav-text">Anulaci&oacute;n / Devoluci&oacute;n Total</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a role="tab" class="nav-link" id="tab-c1-1" data-toggle="tab" href="#tab-animated1-1">
+                                        <span class="nav-text">Descuento / Bonificaci&oacute;n Global</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a role="tab" class="nav-link" id="tab-c1-2" data-toggle="tab" href="#tab-animated1-2">
+                                        <span class="nav-text">Devoluci&oacute;n / Descuento / Disminuci&oacute;n por Item</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab-animated1-0" role="tabpanel">
+
+                                    <div class="form-group">
+                                        <section>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" checked value="1"><i class="optradio"></i>Anulaci&oacute;n de la Operaci&oacute;n</label>
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="2"><i class="optradio"></i>Anulaci&oacute;n por error en el RUC</label>
+
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="6"><i class="optradio"></i>Devoluci&oacute;n Total</label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-animated1-1" role="tabpanel">
+                                    <div class="form-group">
+                                        <section>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="4"><i class="rounded-x"></i>Descuento Global</label>
+
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="8"><i class="rounded-x"></i>Bonificaci&oacute;n</label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <input id="txtDsctoTotal" name="txtDsctoTotal" class="form-control input-sm" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-animated1-2" role="tabpanel">
+                                    <div class="form-group">
+                                        <section>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="3"><i class="rounded-x"></i>Correci&oacute;n por Error en la Descripci&oacute;n</label>
+
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="7"><i class="rounded-x"></i>Devoluci&oacute;n por Item</label>
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="5"><i class="rounded-x"></i>Descuento por Item</label>
+                                            </div>
+                                            <div class="position-relative form-check form-check-inline">
+                                                <label class="radio"><input type="radio" name="rbTipoNotaCred" value="9"><i class="rounded-x"></i>Disminuci&oacute;n en el Valor</label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <input type="hidden" id="IdDetalle" />
+                                                <input type="hidden" id="IdProducto" />
+                                                <input type="hidden" id="UMProducto" />
+                                                <input type="hidden" id="hdProducto" />
+                                                <label>Producto</label>
+                                                <input id="txtProducto" name="txtProducto" class="form-control input-sm" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <input type="hidden" id="CantidadP" />
+                                                <label>Cantidad</label>
+                                                <input id="txtCantidad" name="txtCantidad" class="form-control input-sm" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <input type="hidden" id="DsctoUnitP" />
+                                                <input type="hidden" id="DsctoUnitNC" />
+                                                <input type="hidden" id="PreVtaP" />
+                                                <input type="hidden" id="PreVtaNC" />
+                                                <input type="hidden" id="ValorVtaP" />
+                                                <input type="hidden" id="ValorVtaNC" />
+                                                <input type="hidden" id="ValorUnitP" />
+                                                <input type="hidden" id="IGV" />
+                                                <input type="hidden" id="hdfTipoOpe" />
+                                                <input type="hidden" id="lstTipoMonedaPago" />
+                                                <label>Valor Unitario sin IGV</label>
+                                                <input id="txtValorUnit" name="txtValorUnit" class="form-control input-sm" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label>Motivo o Sustento</label>
+                                    <textarea id="txtObservaciones" name="txtObservaciones" class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <br /><br />
+                                    <button id="btnAgregar" class="btn btn-success"><i class="fa fa-plus-circle"></i> Ver Detalle</button>
+                                    <i class="fa fa-arrow-circle-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Detalle</h6>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <table class="table table-bordered" id="tbDetalle" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Cantidad</th>
+                                            <th>Unid. Medida</th>
+                                            <th>Producto</th>
+                                            <th>Valor Unit. (c/IGV)</th>
+                                            <th>Dscto. Unit. (C/IGV)</th>
+                                            <th>Import de Vta. (c/IGV)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8">No existen registros</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <h6 class="c-grey-900">Observación</h6>
+                            <hr>
+                            <div class="form-group">
+                                <textarea id="txtObservacion" class="form-control" rows="6"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <h4>Cantidad</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Total de ventas - Operaciones grabadas</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Total de ventas - Operaciones inafectas</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Total de ventas - Operaciones exoneradas</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Total Descuento</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Sumatoria IGV</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Importe total ventas</h4>
+                            </div>
+                            <div class="form-group">
+                                <h4>Moneda</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <h4 id="hCantidad">0.00</h4>
+
+                            </div>
+                            <div class="form-group">
+                                <h4 id="hTotalValorVta">0.00</h4>
+                                <input type="hidden" id="subtotales">
+
+                            </div>
+                            <div class="form-group">
+                                <h4 id="hTotalInafectas">0.00</h4>
+
+                                <input type="hidden" id="inafecta">
+                            </div>
+                            <div class="form-group">
+                                <h4 id="hTotalExoneradas">0.00</h4>
+                                <input type="hidden" id="exonerada">
+                                <input type="hidden" id="gratuita">
+                            </div>
+                            <div class="form-group">
+                                <h4 id="hdfDescuento">0.00</h4>
+                                <input type="hidden" id="descuento">
+                            </div>
+                            <div class="form-group">
+                                <h4 id="hSumIgv">0.00</h4>
+                                <input type="hidden" id="igv">
+                            </div>
+
+                            <div class="form-group">
+                                <h4 id="hImpTotalVta">0.00</h4>
+                                <input type="hidden" id="Totales">
+                            </div>
+
+                            <div class="form-group">
+                                <h4 id="hMonedaComprobante"></h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-lg-12">
+                <div class="form-group pull-right">
+                    <button class="btn btn-success  btn-lg" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Lista de Comprobente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>Buscar</label>
+                            <input class="form-control form-control-sm" id="txtBuscar" name="txtBuscar" type="search" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>Fecha Inicio</label>
+                            <input class="form-control form-control-sm" id="fechaInicio" name="fechaInicio" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>Fecha Fin</label>
+                            <input class="form-control form-control-sm" id="fechaFin" name="fechaFin" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <br />
+                        <div class="float-right">
+                            <button class="btn btn-primary" id="btnFiltrar"><i class="fa fa-filter"></i> Filtrar</button>
+                        </div>
+                        <br />
+                    </div>
+                    <div class="col-12">
+                        <input type="hidden" id="hdfId" />
+                        <div class="table-responsive-sm table-responsive-md">
+                            <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbVenta">
+                                <thead>
+                                    <tr class="text-tit" style="border:1px;">
+                                        <th>N° Serie</th>
+                                        <th>Documento</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Ope. Grabada</th>
+                                        <th>Ope. Exonerada</th>
+                                        <th>Ope. Inafecta</th>
+                                        <th>IGV</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-peq"></tbody>
+                            </table>
+                            <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+                            <input type="hidden" id="TotalReg" />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+
+                                    <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                        <input type="checkbox" id="IdTotal" name="IdTotal" class="peer" checked>
+                                        <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Todos Registro</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-12 ">
+                                    <input type="hidden" id="hdf_Pagina" />
+                                    <input type="hidden" id="hdf_TotalPagina" />
+                                    <div class="float-right">
+                                        <button class="btn btn-secondary" id="btnAnteror"><i class="fa fa-arrow-left"></i> Anterior</button>
+                                        <Label ID="lblNumPagina"></Label>
+                                        <button class="btn btn-secondary" id="btnSiguiente"> Siguiente  <i class="fa fa-arrow-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" hidden style="display:none" data-toggle="modal" data-target="#Report" id="reporte"></button>
+<div class="modal" tabindex="-1" role="dialog" id="Report">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="PDFViewer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Venta/EmiNotCredito.js"></script>
+}
+

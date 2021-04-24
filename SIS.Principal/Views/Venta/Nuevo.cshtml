@@ -1,0 +1,525 @@
+﻿
+@{
+    ViewBag.Title = "Nuevo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="app-page-title">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                <i style="margin-right:7px" class="fa fa-tags"></i> REGISTRO DE VENTA
+            </h4>
+        </div>
+        <nav class="col-12" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-tags"></i> Nueva Venta</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-6 col-12" hidden>
+                            <label>Fecha registro</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dFechare" name="dFechare">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-12">
+                            <label>Fecha Atención</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dFechaAten" name="dFechaAten">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Tipo Documento</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstDocumento" name="lstDocumento"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Nro Serie</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtSerie" name="txtSerie" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>N°</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtNumero" name="txtNumero" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Moneda</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstMoneda" name="lstMoneda"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Forma Pago</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstTipoPago" name="lstTipoPago"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label>Fecha Pago</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dFechaPago" name="dFechaPago">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="hdfId" value="0">
+                                <label>Almacén<b class="obl"> (*)</b></label>
+                                <select id="lstAlmacen" name="lstAlmacen" class="form-control "></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Información del Cliente</h6>
+                    <hr />
+                    <div class="form-row">
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="hdfId" value="0">
+                                <label>Tipo Doc. de Identidad <b class="obl">(*)</b></label>
+                                <select id="lstTipoDoc" name="lstTipoDoc" class="form-control "></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                            <div class="form-group">
+                                <label>Número de Documento de Identidad <b class="obl">(*)</b></label>
+                                <div class="input-group">
+                                    <input type="hidden" id="idCliente">
+                                    <input id="txtDocCli" type="text" class="form-control input-sm no-null ui-autocomplete-input" name="txtDocCli" placeholder="Ingrese Nombre o Documento....." autocomplete="off">
+                                    <div class="input-group-append">
+                                        <a href="/Mantenimiento/Cliente" id="aAgregarCliente" class="btn btn-outline-secondary"><i class="fa fa-plus-circle"></i> Agregar Cliente</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Apellidos y Nombres, Denominación o Razón Social</label>
+                                <input id="txtNomCli" name="txtNomCli" class="form-control input-sm no-null" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input id="txtDireccionInicio" name="txtDireccionInicio" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Detalle</h6>
+                    <hr />
+                    <div class="form-row">
+                        <input type="hidden" id="hdfprecio">
+                        <input type="hidden" id="hdf_TotalImporte" />
+                        <input type="hidden" id="txtreal" />
+
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-12">
+                            <div class="form-group">
+                                <label> Producto<b class="obl">(*)</b></label>
+                                <div class="input-group">
+                                    <input type="hidden" id="IdProducto">
+                                    <input type="hidden" id="sCodigo">
+                                    <input type="hidden" id="sCategoria">
+                                    <input type="hidden" id="sMarca">
+                                    <input type="hidden" id="sUnidad">
+                                    <input type="hidden" id="unidad">
+                                    <input type="hidden" id="caja">
+                                    <input type="hidden" id="docena">
+                                    <input id="txtProducto" type="text" class="form-control input-sm no-null ui-autocomplete-input" name="txtProducto" placeholder="Ingrese Producto....." autocomplete="off">
+                                    <div class="input-group-append">
+                                        <button id="btnbuscar" class="btn btn-outline-secondary" data-toggle="modal" data-target="#ModalProducto"><i class="fa fa-plus-circle"></i> Buscar Producto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                            <div class="form-group">
+                                <label>Lista Precio <b class="obl">(*)</b></label>
+                                <select type="text" class="form-control" id="lstPrecio" name="lstPrecio">
+                                    <option value="1">Unidad</option>
+                                    <option value="2">Docena</option>
+                                    <option value="3">Caja</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group">
+                                <label>Stock Actual Producto</label>
+                                <input type="text" class="form-control" id="txtStock" name="txtStock" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="form-group">
+                                    <label>Precio <b class="obl">(*)</b></label>
+                                    <input type="text" class="form-control" id="txtPrecio" name="txtPrecio" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="form-group">
+                                    <label>Cantidad <b class="obl">(*)</b></label>
+                                    <input type="text" class="form-control" id="txtCantidad" name="txtCantidad">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="form-group">
+                                    <label>Descuento %</label>
+                                    <input id="txtDescuentoPor" type="text" class="form-control" name="txtDescuentoPor">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="form-group">
+                                    <label>Descuento</label>
+                                    <input id="txtDescuento" type="text" class="form-control" name="txtDescuento">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="form-group">
+                                    <label>Total</label>
+                                    <input id="txtTotal" type="text" class="form-control" name="txtTotal" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="hidden" id="Count">
+                                <button type="button" class="btn btn-success" id="btnAgregar"><i class="fa fa-calculator"></i> Agregar</button>
+                                <i class="fa fa-arrow-circle-down"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered display" id="tbDetalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Producto</th>
+                                            <th>Unidad</th>
+                                            @*<th>Operación</th>*@
+                                            @*<th>Descuento(%)</th>*@
+                                            <th>Descuento</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="12">No existen registros</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12" id="IdIgvvi">
+                                <div class="form-group caj-check">
+                                    <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                        <input type="checkbox" id="CalIGV" name="CalIGV" class="peer" onchange="mostrarMensaje();" checked="">
+                                        <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Precios incluyen IGV</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <h6 class="c-grey-900">Observación</h6>
+                            <hr>
+                            <div class="form-group">
+                                <textarea id="txtObservacion" class="form-control" rows="6"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6>Totales</h6>
+                    <hr>
+                    <div class="form-row">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><b>Cantidad</b></td>
+                                <td class="text-right"><h6 id="mCant">0.00</h6></td>
+                            </tr>
+                            <tr>
+                                <td><b>Ope. Gravada</b></td>
+                                <td class="text-right">
+                                    <h6 id="MontoSubtotal">0.00</h6>
+                                    <input type="hidden" id="subtotales">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Ope. Exonerada</b></td>
+                                <td class="text-right">
+                                    <h6 id="Montoexonerada">0.00</h6>
+                                    <input type="hidden" id="exonerada">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Ope. Inafecta</b></td>
+                                <td class="text-right">
+                                    <h6 id="Montoinafecta">0.00</h6>
+                                    <input type="hidden" id="inafecta">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Ope. Gratuita</b></td>
+                                <td class="text-right">
+                                    <h6 id="MontoGratuita">0.00</h6>
+                                    <input type="hidden" id="gratuita">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Descuento</b></td>
+                                <td class="text-right">
+                                    <h6 id="Montodescuento">0.00</h6>
+                                    <input type="hidden" id="descuento">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>I.G.V.</b></td>
+                                <td class="text-right">
+                                    <h6 id="MontoIGV">0.00</h6>
+                                    <input type="hidden" id="igv">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Monto total</b></td>
+                                <td class="text-right">
+                                    <h6 id="MontoCalulado">0.00</h6>
+                                    <input type="hidden" id="Totales">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Moneda</b></td>
+                                <td class="text-right"><h6 id="hMonedaComprobante">SOLES</h6></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-lg-12">
+                <div class="form-group pull-right">
+                    @*<button class="btn btn-success  btn-lg" id="btnGuardar" data-toggle="modal" data-target="#ModalCobrar"><i class="fa fa-save"></i> Grabar</button>*@
+                    <button type="button" class="btn-card-pos btn-green" id="btnProcesar" data-toggle="modal" data-target="#ModalCobrar">
+                        <i class="pe-7s-cash"></i>
+                        Procesar Venta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Lista de productos</h5>
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbMaterial">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Unidad</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" id="btnAceptar"> Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*------- MODAL COBRAR --------------*@
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalCobrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Finalizar venta</h5>
+                <input type="hidden" id="hdfId" />
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cantidad recibida</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control no-null" id="txtrecibida" name="txtrecibida">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cantidad de pago</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtPago" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cambio</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm no-null" id="txtCambio" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Tipo de pago</label>
+                                <div class="form-group">
+                                    <select type="text" class="custom-select" id="lstPago" name="lstPago"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Costo Envio</label>
+                                <div class="form-group">
+                                    <input type="text" class="custom-select" id="txtCostoEnvio" name="txtCostoEnvio" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-12">
+                                <label>Nota de pago</label>
+                                <div class="form-group">
+                                    <textarea type="text" class="form-control input-sm no-null" id="txtNotaPago"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                        <div class="row">
+                            <label>Dinero rápido</label>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn10">10</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn20">20</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn50">50</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn100">100</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-red" id="btnLimpiar">Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx">cancelar</button>
+                    <button type="button" id="btnGuardar" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" hidden style="display:none" data-toggle="modal" data-target="#Report" id="reporte"></button>
+<div class="modal" tabindex="-1" role="dialog" id="Report">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="PDFViewer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Venta/Nuevo.js"></script>
+}

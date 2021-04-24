@@ -1,0 +1,438 @@
+﻿
+@{
+    ViewBag.Title = "RegistrarOC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="app-page-title">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                <i style="margin-right:7px" class="fa fa-shopping-cart"></i> Registrar Compra
+            </h4>
+        </div>
+        <nav class="col-12" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+                <li class="breadcrumb-item"><i class="fa fa-shopping-cart"></i> <a href="@Url.Action("ListaRegistroOC", "Gestion")">Lista Compras</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-shopping-cart"></i> Registrar Compra</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-4">
+                            <label>Fecha Emisión</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtFechaEmision" name="txtFechaEmision">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Serie</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtSerie" name="txtSerie" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label> Nro Compra</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtNumero" name="txtNumero" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>´Tipo Documento</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstTipoDoc" name="lstTipoDoc"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>N° Doc</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtNumeroDocumento" name="txtNumeroDocumento">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Forma Pago</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstTipoPago" name="lstTipoPago"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label>Fecha Pago</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dFechaPago" name="dFechaPago" disabled>
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Concepto</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control form-control" id="lstConcepto" name="lstConcepto"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <label>Moneda</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstMoneda" name="lstMoneda"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="IdOrden" />
+                                <label>OC N°</label>
+                                <div class="input-group">
+                                    <input id="txtNroOC" type="text" class="form-control ui-autocomplete-input" name="txtNroOC" placeholder="0001-00012..." autocomplete="off">
+                                    <div class="input-group-append">
+                                        <button id="btnBuscarOc" data-toggle="modal" data-target="#ModalOc" class="btn btn-outline-secondary"><i class="fa fa-plus-circle"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <br /><br />
+                            <div class="form-group">
+                                <div class="position-relative form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" id="checkAfectaigv" name="checkAfectaigv" checked class="form-check-input"> Afecta Stock
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Información del Proveedor</h6>
+                    <hr />
+                    <div class="form-row">
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="hdfId" value="0">
+                                <label>Tipo Doc. de Identidad <b class="obl">(*)</b></label>
+                                <select id="lstTipoI" name="lstTipoI" class="form-control "></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-12">
+                            <div class="form-group">
+                                <label>Número de Documento de Identidad <b class="obl">(*)</b></label>
+                                <div class="input-group">
+                                    <input id="txtDocCli" type="text" class="form-control input-sm no-null ui-autocomplete-input" name="txtDocCli" placeholder="Ingrese Nombre o Documento....." autocomplete="off">
+                                    <div class="input-group-append">
+                                        <a href="/Mantenimiento/Proveedor" id="aAgregarCliente" class="btn btn-outline-secondary"><i class="fa fa-plus-circle"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Apellidos y Nombres, Denominación o Razón Social</label>
+                                <input id="txtNomCli" name="txtNomCli" class="form-control input-sm no-null" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input id="txtDireccionInicio" name="txtDireccionInicio" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Almacén</label>
+                                <select id="lstAlmacen" name="lstAlmacen" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6 class="c-grey-900">Detalle</h6>
+                    <hr />
+                    <div class="form-row">
+
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <label> Producto<b class="obl">(*)</b></label>
+                                <div class="input-group">
+                                    <input type="hidden" id="IdProducto">
+                                    <input type="hidden" id="sCodigo">
+                                    <input type="hidden" id="sCategoria">
+                                    <input type="hidden" id="sMarca">
+                                    <input type="hidden" id="sUnidad">
+                                    <input id="txtProducto" type="text" class="form-control input-sm no-null ui-autocomplete-input" name="txtProducto" placeholder="Ingrese Producto....." autocomplete="off">
+                                    <div class="input-group-append">
+                                        <button id="btnbuscar" class="btn btn-outline-secondary" data-toggle="modal" data-target="#ModalProducto"><i class="fa fa-plus-circle"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <label>Precio <b class="obl">(*)</b></label>
+                                <input type="text" class="form-control" id="txtPrecio" name="txtPrecio">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                            <div class="form-group">
+                                <label>Cantidad <b class="obl">(*)</b></label>
+                                <input type="text" class="form-control" id="txtCantidad" name="txtCantidad">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="hidden" id="Count">
+                                <button type="button" class="btn btn-success" id="btnAgregar"><i class="fa fa-calculator"></i> Agregar</button>
+                                <i class="fa fa-arrow-circle-down"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered display" id="tbDetalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Producto</th>
+                                            <th>Unidad</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="12">No existen registros</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12" id="IdIgvvi">
+                                <div class="form-group">
+                                    <div class="position-relative form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" id="CalIGV" name="CalIGV" onchange="mostrarMensaje();" class="form-check-input" checked> Precios incluyen IGV
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <h6 class="c-grey-900">Observación</h6>
+                            <hr>
+                            <div class="form-group">
+                                <textarea id="txtObservacion" class="form-control" rows="6"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h6>Totales</h6>
+                    <hr>
+                    <div class="form-row">
+
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <h5>Cantidad</h5>
+                            </div>
+                            <div class="form-group">
+                                <h5>SubTotal</h5>
+                            </div>
+                            <div class="form-group">
+                                <h5>IGV</h5>
+                            </div>
+                            <div class="form-group">
+                                <h5>Total</h5>
+                            </div>
+                            <div class="form-group">
+                                <h5>Moneda</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <h5 id="mCant">0.00</h5>
+                            </div>
+                            <div class="form-group">
+                                <h5 id="MontoSubtotal">0.00</h5>
+                                <input type="hidden" id="subtotales">
+                            </div>
+                            <div class="form-group">
+                                <h5 id="MontoIGV">0.00</h5>
+                                <input type="hidden" id="igv">
+                            </div>
+                            <div class="form-group">
+                                <h5 id="MontoCalulado">0.00</h5>
+                                <input type="hidden" id="Totales">
+                            </div>
+                            <div class="form-group">
+                                <h5 id="hMonedaComprobante">SOLES</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-lg-12">
+                <div class="form-group pull-right">
+                    <button class="btn btn-success  btn-lg" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Lista Producto</h5>
+
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-lg-12 col-12">
+                        <div class="card-bod">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbMaterial">
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Unidad</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-primary" id="btnAceptar"> Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalOc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Ordenes de compra aprobadas</h5>
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Filtro</label>
+                            <input class="form-control" id="txtBusqueda" placeholder="buscando..." name="txtBusqueda" type="search" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-12">
+                        <div class="card-bod">
+                            <div class="table-responsive-sm table-responsive-md">
+                                <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbCompra">
+                                    <thead>
+                                        <tr class="text-tit" style="border:1px;">
+                                            <th>N° Serie</th>
+                                            <th>Proveedor</th>
+                                            <th>Tipo Pago</th>
+                                            <th>Moneda</th>
+                                            <th>Fecha Registro</th>
+                                            <th>Fecha Pago</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-peq"></tbody>
+                                </table>
+                                <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+                                <input type="hidden" id="TotalReg" />
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+
+                                        <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                            <input type="checkbox" id="IdTotal" name="IdTotal" class="peer" checked>
+                                            <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Todos Registro</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 ">
+                                        <input type="hidden" id="hdf_Pagina" />
+                                        <input type="hidden" id="hdf_TotalPagina" />
+                                        <div class="float-right">
+                                            <button class="btn btn-secondary" id="btnAnteror"><i class="fa fa-arrow-left"></i> Anterior</button>
+                                            <Label ID="lblNumPagina"></Label>
+                                            <button class="btn btn-secondary" id="btnSiguiente"> Siguiente  <i class="fa fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/page/Gestion/RegistrarCompra.js"></script>
+}

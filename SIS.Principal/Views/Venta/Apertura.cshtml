@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Apertura";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h4><i style="margin-right:7px" class="fa fa-users"></i>APERTURA DE CAJA</h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-users"></i>Apertura de caja</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <label>Fecha de Apertura</label>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" id="txtFecha" class="form-control input-sm" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label>Usuario</label>
+        <div class="form-group">
+            <div class="input-group">
+                <select id="lstUsuario" name="lstUsuario" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label>Caja</label>
+        <div class="form-group">
+            <div class="input-group">
+                <select id="lstCaja" name="lstCaja" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label>Moneda</label>
+        <div class="form-group">
+            <div class="input-group">
+                <select id="lstMoneda" name="lstMoneda" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label>Monto</label>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control input-sm no-null" id="txtMonto">
+            </div>
+        </div>
+    </div>
+    <button type="button" id="btnApertura" class="btn btn-primary">Dar Apertura</button>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h4>CAJAS ABIERTAS EN FECHA DE HOY</h4>
+    </div>
+</div>
+<div class="card cont">
+    <div class="table-responsive" id="dvApertura">
+        <table class="table table-striped table-bordered" style="width:100%" id="tbApertura">
+            <thead>
+                <tr style="border:1px;">
+                    <th>Fecha Apertura</th>
+                    <th>Usuario Responsable</th>
+                    <th>Caja</th>
+                    <th>Moneda</th>
+                    <th>Monto Apertura</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Venta/Apertura.js"></script>
+}

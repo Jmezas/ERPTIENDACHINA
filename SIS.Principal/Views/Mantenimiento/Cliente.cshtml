@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <h4>
+            <i style="margin-right:7px" class="fa fa-users"></i> LISTA DE CLIENTES
+        </h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-users"></i> Clientes</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group pull-right">
+            <button class="btn btn-info" id="btnNuevo" data-toggle="modal" data-target="#ModalNuevo"><i class="fa fa-plus"></i> Nuevo Cliente</button>
+        </div>
+    </div>
+</div>
+<div class="card cont">
+    <div class="table-responsive" id="dvCliente">
+        <table class="table table-striped table-bordered" style="width:100%" id="tbCliente">
+            <thead>
+                <tr style="border:1px;">
+                    <th></th>
+                    <th>Documento</th>
+                    <th>Nro Documento</th>
+                    <th>Razón Social</th>
+                    <th>Teléfono</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @*------- MODAL --------------*@
+    <div class="modal fade animate__animated animate__fadeInDown" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Cliente</h5>
+                    <input type="hidden" id="hdfId" />
+                    <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-12">
+                            <label><b class="obligatorio">(*)</b> Tipo Documento</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select class="form-control" id="lstTipoDoc" name="lstTipoDoc"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-12">
+                            <label><b class="obligatorio">(*)</b> Nro Documento</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="txtDocumento">
+                                <div class="input-group-append">
+                                    <button class="btn-wide btn btn-success" id="btnBuscar" type="button"><i class="pe-7s-search"></i>  Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-12">
+                            <label><b class="obligatorio">(*)</b> Razón Social / Nombres y Apellidos</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtRazon">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12">
+                            <label>Teléfono</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtTelefono">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12">
+                            <label>Celular</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtCelular">
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-lg-6 col-12">
+                            <label>Email</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="txtEmail">
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-lg-12 col-12">
+                            <label><b class="obligatorio">(*)</b> Dirección</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtDireccion">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <label><b class="obligatorio">(*)</b> Departamento</label>
+                            <div class="form-group">
+                                <select class="form-control" style="width: 100%" id="lstDepartamento" name="lstDepartamento"> </select> 
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <label><b class="obligatorio">(*)</b> Provincia</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstProvincia" name="lstProvincia"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <label><b class="obligatorio">(*)</b> Distrito</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="form-control" id="lstDistrito" name="lstDistrito"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx">Cancelar</button>
+                        <button type="button" id="btnGrabar" class="btn btn-primary">Grabar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Mantenimiento/Cliente.js"></script>
+}
+

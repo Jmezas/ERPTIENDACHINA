@@ -1,0 +1,443 @@
+﻿
+@{
+    ViewBag.Title = "PostVenta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/scripts/jquery-typeahead/jquery.typeahead.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <form autocomplete="off">
+                    <div class="form-row">
+                        <div class="col-lg-6 col-12" hidden>
+                            <label>Fecha Pago</label>
+                            <div class="form-group">
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="dFechaPago" name="dFechaPago" disabled>
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <label>Tipo Documento</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="custom-select" id="lstDocumento" name="lstDocumento"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <label>Serie</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtSerie" name="txtSerie" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <label>Número</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="txtNumero" name="txtNumero" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="hdfId" value="0">
+                                <label>Almacén<b class="obl"> (*)</b></label>
+                                <select id="lstAlmacen" name="lstAlmacen" class="custom-select"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <label>Moneda</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select type="text" class="custom-select" id="lstMoneda" name="lstMoneda"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="hdfId" value="0">
+                                <label>Tipo Doc.</label>
+                                <select id="lstTipoDoc" name="lstTipoDoc" class="custom-select"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Cliente</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="hidden" id="idCliente">
+                                        <select id="txtDocCli" type="text" class="form-control input-sm no-null ui-autocomplete-input" name="txtDocCli" autocomplete="off"></select>
+                                    </div>
+                                    <div class="col-4">
+                                        <button id="aAgregarCliente" class="btn btn-outline-secondary" data-toggle="modal" data-target="#ModalNuevo" type="button"><i class="fa fa-plus-circle"></i> Nuevo Cliente</button>
+                                    </div>
+
+                                </div>
+                                @*<div class="input-group">
+
+
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <label>Buscar producto</label>
+                            <div class="form-group">
+
+                                <select type="search" class="form-control" id="producto" name="producto" autocomplete="off"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="max-height: 250px; overflow-y: auto;">
+                            <div class="table-responsive">
+                                <table class="table table-bordered display" id="tbDetalle">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Unidad</th>
+                                            @*<th>Operación</th>*@
+                                            <th>Descuento</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="12">No existen registros</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12" id="IdIgvvi">
+                            <div class="form-group caj-check">
+                                <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                    <input type="checkbox" id="CalIGV" name="CalIGV" class="peer" onchange="mostrarMensaje();" checked="">
+                                    <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Precios incluyen IGV</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-2 card-line">
+                                    <div class="card-lines">
+                                        <b>Cantidad</b>
+                                        <h6 id="mCant">0.00</h6>
+                                    </div>
+                                </div>
+                                <div class="col-2  col-md-2 col-sm-2 col-12 card-line">
+                                    <div class="card-lines">
+                                        <b>Ope.Grabada</b>
+                                        <h6 id="MontoSubtotal">0.00</h6>
+                                        <input type="hidden" id="subtotales">
+                                    </div>
+                                </div>
+                                <div class="col-2 col-md-2 col-sm-2 col-12 card-line">
+                                    <div class="card-lines">
+                                        <b>Descuento</b>
+                                        <h6 id="Montodescuento">0.00</h6>
+                                        <input type="hidden" id="descuento">
+                                    </div>
+                                </div>
+                                <div class="col-2  col-md-2 col-sm-2 col-12 card-line">
+                                    <div class="card-lines">
+                                        <b>I.G.V</b>
+                                        <h6 id="MontoIGV">0.00</h6>
+                                        <input type="hidden" id="igv">
+                                    </div>
+                                </div>
+                                <div class="col-2  col-md-2 col-sm-2 col-12 card-line">
+                                    <div class="card-lines">
+                                        <b>Monto Total</b>
+                                        <h6 id="MontoCalulado">0.00</h6>
+                                        <input type="hidden" id="Totales">
+                                    </div>
+                                </div>
+                                <div class="col-2 col-md-2 col-sm-2 col-12 card-line">
+                                    <div class="card-lines">
+                                        <b>Moneda</b>
+                                        <h6 id="hMonedaComprobante">SOLES</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row esp-vertical">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                                    <button type="button" class="btn-card-pos btn-green" id="btnEfectivo" data-toggle="modal" data-target="#ModalEfectivo">
+                                        <i class="pe-7s-cash"></i>
+                                        Efectivo
+                                    </button>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                                    <button type="button" class="btn-card-pos btn-blue" id="btntargeta" data-toggle="modal" data-target="#ModalEfectivo">
+                                        <i class="pe-7s-credit"></i>
+                                        Tarjeta
+                                    </button>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                                    <button type="button" class="btn-card-pos btn-purple" id="btncredito" data-toggle="modal" data-target="#ModalEfectivo">
+                                        <i class="pe-7s-wallet"></i>
+                                        Crédito
+                                    </button>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+                                    <button type="button" class="btn-card-pos btn-red" id="btnLimpiarFormulario">
+                                        <i class="pe-7s-junk"></i>
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*------- MODAL --------------*@
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalEfectivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Finalizar venta</h5>
+                <input type="hidden" id="hdfId" />
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cantidad recibida</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control no-null" id="txtrecibida" name="txtrecibida">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cantidad de pago</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtPago" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Cambio</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm no-null" id="txtCambio" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Tipo de pago</label>
+                                <div class="form-group">
+                                    <select type="text" class="custom-select" id="lstPago" name="lstPago"></select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <label>Costo Envio</label>
+                                <div class="form-group">
+                                    <input type="text" class="custom-select" id="txtCostoEnvio" name="txtCostoEnvio"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-12">
+                                <label>Nota de pago</label>
+                                <div class="form-group">
+                                    <textarea type="text" class="form-control input-sm no-null" id="txtNotaPago"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-12">
+                        <div class="row">
+                            <label>Dinero rápido</label>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn10">10</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn20">20</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn50">50</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-gris" id="btn100">100</button>
+                            </div>
+                            <div class="col-12 esp-btn">
+                                <button class="btn-card-pos-modal btn-red" id="btnLimpiar">Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx">cancelar</button>
+                    <button type="button" id="btnGuardar" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" hidden style="display:none" data-toggle="modal" data-target="#Report" id="reporte"></button>
+<div class="modal" tabindex="-1" role="dialog" id="Report">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="PDFViewer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade animate__animated animate__fadeInDown" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ata-controls-modal="your_div_id" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Cliente</h5>
+                <input type="hidden" id="hdfId" />
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        <label><b class="obligatorio">(*)</b> Tipo Documento</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <select class="form-control" id="lstTipoDocCliente" name="lstTipoDocCliente"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-12">
+                        <label><b class="obligatorio">(*)</b> Nro Documento</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="txtDocumento">
+                            <div class="input-group-append">
+                                <button class="btn-wide btn btn-success" id="btnBuscar" type="button"><i class="pe-7s-search"></i>  Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        <label><b class="obligatorio">(*)</b> Razón Social / Nombres y Apellidos</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm no-null" id="txtRazon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-12">
+                        <label>Teléfono</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="txtTelefono">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-12">
+                        <label>Celular</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtCelular">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <label>Email</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" id="txtEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-12">
+                        <label><b class="obligatorio">(*)</b> Dirección</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm no-null" id="txtDireccion">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <label><b class="obligatorio">(*)</b> Departamento</label>
+                        <div class="form-group">
+                            <select class="form-control" style="width: 100%" id="lstDepartamento" name="lstDepartamento"> </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <label><b class="obligatorio">(*)</b> Provincia</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <select type="text" class="form-control" id="lstProvincia" name="lstProvincia"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <label><b class="obligatorio">(*)</b> Distrito</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <select type="text" class="form-control" id="lstDistrito" name="lstDistrito"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx">Cancelar</button>
+                    <button type="button" id="btnGrabar" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/scripts/jquery-typeahead/jquery.typeahead.min.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/page/Venta/PostVenta.js"></script>
+    <script>
+        //Cerramos el menu al ingresar a la página
+        setTimeout(clickbutton, 100);
+        function clickbutton() {
+            $('#cerrarAuto').click();
+        }
+    </script>
+}

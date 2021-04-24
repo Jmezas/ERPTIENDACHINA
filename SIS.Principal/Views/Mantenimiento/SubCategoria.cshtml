@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "SubCategoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h4>
+            <i style="margin-right:7px" class="fa fa-bookmark"></i> SUBCATEGORÍA
+        </h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-bookmark"></i> Subcategoría</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group pull-right">
+            <button class="btn btn-info" id="btnNuevo" data-toggle="modal" data-target="#ModalNuevo"><i class="fa fa-plus"></i> Nueva Subcategoría</button>
+        </div>
+    </div>
+</div>
+<div class="card cont">
+    <div class="table-responsive" id="dvCliente">
+        <table class="table table-striped table-bordered" style="width:100%" id="tbCategoria">
+            <thead>
+                <tr style="border:1px;">
+                    @*<th>SubCategoría</th>*@
+                    <th>Nombre</th>
+                    <th>Sigla</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @*------- MODAL --------------*@
+    <div class="modal fade animate__animated animate__fadeInDown" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Subcategoría</h5>
+                    <input type="hidden" id="hdfId" />
+                    <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-12" hidden>
+                            <label>Categoría</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                   <select class="form-control" id="lstCategoria" name="lstCategoria"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label>Nombre</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtNombre">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12">
+                            <label>Sigla</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm no-null" id="txtSigla">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal" id="cerrarpx">Cancelar</button>
+                        <button type="button" id="btnGrabar" class="btn btn-primary">Grabar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Mantenimiento/SubCategoria.js"></script>
+}
+
+

@@ -1,0 +1,211 @@
+﻿
+$(function () {
+
+    var table = $("#tbUnidad").DataTable({
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por p&aacute;gina",
+            "zeroRecords": "No se encontraron datos.",
+            "info": "Mostrando la p&aacute;gina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtrando _MAX_ total de registros)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "previous": "Anterior",
+                "next": "Siguiente",
+                "last": "&Uacute;timo"
+            },
+        },
+
+
+        "processing": true,
+
+        "order": [],
+        "ajax": {
+            "url": General.Utils.ContextPath('Mantenimiento/ListaUnidad'),
+            "contentType": "application/json",
+            "type": "POST",
+            "dataType": "JSON",
+            "data": function (d) {
+                console.log(d);
+                return JSON.stringify(d);
+            },
+
+        },
+        "columns": [
+            { "data": "CodigSunat" },
+            { "data": "Nombre" },
+            { "data": "Sigla" },
+            {
+                "data": "IdUnidad", "render": function (data) {
+                    return '<button class="btn btn-warning btn-xs evento" data-toggle="modal" data-target="#ModalNuevo" onclick="Obtener(' + data + ');"><i class="fa fa-edit"></i> </button>' +
+                        "&nbsp; " + '<button class="btn btn-danger Eliminar" data-toggle="modal" data-target="#Eliminar"  "><i class="fa fa-trash"></i> </button>';
+
+                },
+
+                "orderable": false, "searchable": false, "width": "12%"
+            }
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+                extend: 'pdf',
+                text: "<i class='fa fa-file-pdf-o'> PDF</i>",
+                titleAttr: "Exportar PDF",
+                className: "btn btn-danger btn-xs",
+            },
+            {
+
+                extend: 'excelHtml5',
+                text: "<i class='fa fa-file-excel-o'> Excel</i>",
+                titleAttr: "Exportar Excel",
+                className: "btn btn-success btn-xs",
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                    $('row c[r^="C"]', sheet).attr('s', '2');
+
+                }
+            }
+        ]
+
+    });
+
+    $("#btnGrabar").click(function () {
+        console.log("entro")
+
+        var $form = $("#ModalNuevo");
+        var oDatos = General.Utils.SerializeForm($form);
+
+        if (General.Utils.ValidateForm($form)) {
+            var oDatos = {
+                IdUnidad: $("#hdfId").val(),
+                CodigSunat: $("#txtCodigo").val(),
+                Nombre: $("#txtNombre").val(),
+                Sigla: $("#txtSigla").val(),
+            }
+
+            $.ajax({
+                async: true,
+                type: 'post',
+                url: General.Utils.ContextPath('Mantenimiento/InstUnidad'),
+                dataType: 'json',
+                data: oDatos,
+                success: function (response) {
+                    console.log(response);
+                    if (response["Id"] == TypeMessage.Success) {
+                        Swal.fire(
+                            'Exito!',
+                            response.Message,
+                            response.Id
+                        )                       
+
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            response.Message,
+                            response.Id
+                        )
+                    }
+                    $("#tbUnidad").DataTable().ajax.reload();
+                    $("[data-dismiss=modal]").trigger({ type: "click" });//cerrar modal
+                    Limpiar();
+                }
+            });
+
+
+
+        }
+    });
+    $("#tbUnidad").on('click', 'tbody .Eliminar', function () {
+        var data = table.row($(this).parents("tr")).data();
+        $("#hdfId").val(data.IdUnidad);
+        var Nombre = $(this).parents("tr").find("td").eq(1).text();
+        $("#Nombre").text(Nombre);
+
+        Swal.fire({
+            title: 'Eliminar',
+            text: '¿Desea eliminar la unidad de medida ' + Nombre + ' ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor:'#d33',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    async: true,
+                    type: 'post',
+                    url: General.Utils.ContextPath('Mantenimiento/Eliminar'),
+                    dataType: 'json',
+                    data: { Id: $("#hdfId").val(), IdFlag: 2 },
+                    success: function (response) {
+                        console.log(response)
+                        if (response["Id"] == TypeMessage.Success) { 
+                            Swal.fire(  
+                                'Exito!',
+                                response.Message,
+                                response.Id
+                            )
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                response.Message,
+                                response.Id
+                            )
+                          
+                        }
+                        $("#tbUnidad").DataTable().ajax.reload();
+                        $("[data-dismiss=modal]").trigger({ type: "click" });//cerrar modal
+
+                    }
+                });
+               
+            }
+        }) 
+    });
+   
+    $("#btnNuevo").click(function () {
+
+        Limpiar();
+    });
+});
+
+var Obtener = function (Id) {
+    var senData = {
+        Id: Id
+    }
+    $.ajax({
+        async: true,
+        type: 'post',
+        url: General.Utils.ContextPath('Mantenimiento/ListaEditUnidad'),
+        dataType: 'json',
+        data: senData,
+        success: function (response) {
+            console.log(response);
+            $("#hdfId").val(response.IdUnidad);
+            $("#txtCodigo").val(response.CodigSunat);
+            $("#txtNombre").val(response.Nombre);
+            $("#txtSigla").val(response.Sigla);
+
+        }
+
+    });
+}
+
+
+function Limpiar() {
+    $("#hdfId").val(0);
+
+    $("#txtCodigo").val('');
+    $("#txtNombre").val('');
+    $("#txtSigla").val('');
+}

@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "ListaInventario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <h4>
+            <i style="margin-right:7px" class="fa fa-truck"></i> MOVIMIENTOS DE INGRESOS / SALIDAS
+        </h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-truck"></i> Ingresos / Salidas</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group pull-right">
+            <a class="btn btn-info" id="btnNuevo" href="@Url.Action("CrearInventario", "Gestion")"><i class="fa fa-plus"></i>  Nuevo</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label>Búsqueda</label>
+                    <input class="form-control" id="txtBusqueda" name="txtBusqueda" type="search" />
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-sm-12">
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input class="form-control" id="txtFechaInicio" name="txtFechaInicio" type="text" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-sm-12">
+                <div class="form-group">
+                    <label>Fecha Fin</label>
+                    <input class="form-control" id="txtFechaFin" name="txtFechaFin" type="text" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="float-right">
+                <button class="btn btn-info" id="btnFiltrar"><i class="fa fa-search"></i> Filtrar</button>
+                <button class="btn btn-danger" id="btnFactura"><i class="fa fa-file-pdf"></i> PDF</button>
+                <button class="btn btn-success" id="btnExcel"><i class="fa fa-file-excel"></i> Excel</button>
+            </div>
+
+        </div>
+        <br /><br />
+        <div class="col-12">
+            <input type="hidden" id="hdfId" />
+            <div class="table-responsive-sm table-responsive-md">
+                <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbCompra">
+                    <thead>
+                        <tr class="text-tit" style="border:1px;">
+                            <th>N° Serie</th>
+                            <th>Tipo Mov.</th>
+                            <th>Fecha Emisión</th>
+                            <th>Moneda</th>
+                            <th>Tipo Ope.</th>
+                            <th>Subtotal</th>
+                            <th>IGv</th>
+                            <th>Total</th> 
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-peq"></tbody>
+                </table>
+                <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+                <input type="hidden" id="TotalReg" />
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                            <input type="checkbox" id="IdTotal" name="IdTotal" class="peer" checked>
+                            <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Todos Registro</span></label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-12 ">
+                        <input type="hidden" id="hdf_Pagina" />
+                        <input type="hidden" id="hdf_TotalPagina" />
+                        <div class="float-right">
+                            <button class="btn btn-secondary" id="btnAnteror"><i class="fa fa-arrow-left"></i> Anterior</button>
+                            <Label ID="lblNumPagina"></Label>
+                            <button class="btn btn-secondary" id="btnSiguiente"> Siguiente  <i class="fa fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="modal fade animate__animated animate__fadeInDown" id="Detalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Detalle</h5>
+                <input type="hidden" id="hdfId" />
+                <input type="hidden" id="hdfFlag" />
+                <button type="button" class="close animate__animated animate__fadeOutUp" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                        <table class="table table-bordered" id="tbDetalle">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Codigo</th>
+                                    <th>Material</th>
+                                    <th>Unidad</th>
+                                    <th>Categoria</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <p id="pHdet" style="margin-top: 5px; font-size: 11px;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Gestion/ListaMovimiento.js"></script>
+}

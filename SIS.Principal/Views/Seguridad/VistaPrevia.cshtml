@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>VistaPrevia</title>
+    <link href="~/assets/css/main.css" rel="stylesheet">
+    <script type="text/javascript">
+        var Context = '@(HttpContext.Current.Request.Url.Scheme + System.Uri.SchemeDelimiter + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + ((HttpContext.Current.Request.ApplicationPath.EndsWith("/")) ? "" : "/"))';
+    </script>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="card" style="margin-top: 50px;">
+                <div class="card-body">
+
+                    @using (Html.BeginForm("ImpresarSistema", "Seguridad", FormMethod.Post, new { @id = "FrmLogin", novalidate = "novalidate", @class = "login100-form validate-form" }))
+                    {
+
+                        <div class="row">
+
+                            <input type="hidden" id="IdEmpresa" value="@ViewBag.IdEmpresa" />
+                            <input type="hidden" id="IdSucursal" value="@ViewBag.Sucursal" />
+                            <input type="hidden" id="IdUsuario" value="@ViewBag.IdUsuario" />
+                            <div class="col-lg-4 col-12">
+                                <label>RUC</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtRuc" name="txtRuc" value="@ViewBag.Ruc" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12">
+                                <label>RAZÓN SOCIAL</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtrazon" name="txtrazon" value="@ViewBag.RazonSocial" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12">
+                                <label>SUCURSAL</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <select type="text" class="form-control" id="lstSucursal" name="lstSucursal"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <input  type="hidden" id="TextSucursal" name="TextSucursal"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group pull-right" style="padding-left:10px;">
+                                    <button class="btn btn-success btn-lg"><i class="fa fa-arrow-right"></i> Ingresar</button>
+                                </div>
+                                <div class="form-group pull-right">
+                                    <a href="@Url.Action("Logout", "Seguridad")" class="btn btn-danger btn-lg"><i class="fa fa-times"></i> Salir</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+
+    <script type="text/javascript" src="~/assets/scripts/main.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/app.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/custom.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                async: true,
+                type: 'post',
+                url: General.Utils.ContextPath("Shared/ListaComboId"),
+                dataType: 'json',
+                data: { flag: 8, Id: $("#IdUsuario").val() },
+                success: function (response) {
+
+                    if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+
+                        $.grep(response, function (oDocumento) {
+
+                            $('select[name="lstSucursal"]').append($('<option>', { value: oDocumento["Id"], text: oDocumento["Nombre"] }));
+                           // $("#TextSucursal").val($("#lstSucursal option:selected").text())
+                            $('input[name="TextSucursal"]').val($("#lstSucursal option:selected").text())
+                        });
+                    }
+                }
+            });
+
+            $("#lstSucursal").change(function () {
+                $('input[name="TextSucursal"]').val($("#lstSucursal option:selected").text())
+              //  $("#TextSucursal").val($("#lstSucursal option:selected").text())
+
+            })
+        })
+    </script>
+</body>
+</html>
