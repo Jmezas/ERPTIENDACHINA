@@ -11,6 +11,7 @@ namespace SIS.Entity
         public ESucursal()
         {
             Ubigeo = new EUbigeo();
+            IdSucursal = 0;
             //Empresa = new EEmpresa();
         }
         public int IdSucursal { get; set; }

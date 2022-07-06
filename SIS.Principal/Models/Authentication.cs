@@ -45,7 +45,7 @@ namespace SIS.Principal.Models
             {
                 //sale de sesionm
             }
-               
+
         }
         public void RestartSession()
         {
@@ -72,8 +72,11 @@ namespace SIS.Principal.Models
                 string nombreSucursal = SessionCookie.Values["NombreSucursal"];
                 if (idsucursal != null)
                 {
+
                     UserLogued.Sucursal.IdSucursal = int.Parse(idsucursal);
                     UserLogued.Sucursal.Nombre = nombreSucursal;
+
+
                 }
 
 
