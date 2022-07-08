@@ -6,12 +6,12 @@ using System.Web;
 using SIS.Entity;
 using SIS.Business;
 using System.Web.SessionState;
+using SIS.Principal.Controllers;
 namespace SIS.Principal.Models
 {
     public class Authentication
     {
         private BUsuario BUsuario = BUsuario.ObtenerInstancia();
-
         public const int SinPermisos = 1;
         public const int DirectorioActivo = 2;
         public const int ServidorIris = 3;
@@ -34,18 +34,12 @@ namespace SIS.Principal.Models
             Response = HttpContext.Current.Response;
             SessionCookie = Request.Cookies["SessionCookie"];
             idComprobantePago = 0;
-
             AssignUser();
 
             if (UserLogued != null)
             {
                 Session = HttpContext.Current.Session;
             }
-            else
-            {
-                //sale de sesionm
-            }
-
         }
         public void RestartSession()
         {
@@ -60,31 +54,38 @@ namespace SIS.Principal.Models
 
         private void AssignUser()
         {
-            // Si existe un usuario logueado
-            if (SessionCookie != null)
+            try
             {
-                // Se captura un usuario
-                string sUsuario = SessionCookie.Values["Usuario"];
-                string ruc = SessionCookie.Values["RUC"];
-
-                UserLogued = BUsuario.BuscarPorUsuario(sUsuario, ruc);
-                string idsucursal = SessionCookie.Values["IdSucursal"];
-                string nombreSucursal = SessionCookie.Values["NombreSucursal"];
-                if (idsucursal != null)
+                if (SessionCookie != null)
                 {
+                    // Se captura un usuario
+                    string sUsuario = SessionCookie.Values["Usuario"];
+                    string ruc = SessionCookie.Values["RUC"];
 
-                    UserLogued.Sucursal.IdSucursal = int.Parse(idsucursal);
-                    UserLogued.Sucursal.Nombre = nombreSucursal;
+                    UserLogued = BUsuario.BuscarPorUsuario(sUsuario, ruc);
+                    string idsucursal = SessionCookie.Values["IdSucursal"];
+                    string nombreSucursal = SessionCookie.Values["NombreSucursal"];
+                    if (idsucursal != null)
+                    {
+
+                        UserLogued.Sucursal.IdSucursal = int.Parse(idsucursal);
+                        UserLogued.Sucursal.Nombre = nombreSucursal;
 
 
+                    }
+
+
+                    List<EMenu> lPermisos = BUsuario.ListarMenuPorUsuario(sUsuario, ruc);
+                    if (lPermisos.Count > 0)
+                    {
+                        UserLogued.Menu = lPermisos;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
 
-
-                List<EMenu> lPermisos = BUsuario.ListarMenuPorUsuario(sUsuario, ruc);
-                if (lPermisos.Count > 0)
-                {
-                    UserLogued.Menu = lPermisos;
-                }
             }
         }
         public bool IsValidView(long Id)

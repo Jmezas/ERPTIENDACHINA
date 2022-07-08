@@ -15,9 +15,16 @@ namespace SIS.Factory
 
         protected bool AllowNull = true;
 
+        public DBConnection DBConnection { get; }
+
         public DBHelper(DataBase Database)
         {
             this.Database = Database;
+        }
+
+        public DBHelper(DBConnection dBConnection)
+        {
+            DBConnection = dBConnection;
         }
 
         protected void SetQuery(string Query)

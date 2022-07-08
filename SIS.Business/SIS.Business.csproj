@@ -46,8 +46,10 @@
     <Compile Include="BGestion.cs" />
     <Compile Include="BMantenimiento.cs" />
     <Compile Include="BPerfil.cs" />
+    <Compile Include="BReportes.cs" />
     <Compile Include="BUsuario.cs" />
     <Compile Include="BVenta.cs" />
+    <Compile Include="IBGeneral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

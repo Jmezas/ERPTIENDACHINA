@@ -14,7 +14,6 @@ using ZXing;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Net;
-
 namespace SIS.Principal.Controllers
 {
     public class SharedController : Controller

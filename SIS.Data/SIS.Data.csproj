@@ -49,9 +49,11 @@
     <Compile Include="DGestion.cs" />
     <Compile Include="DMantenimiento.cs" />
     <Compile Include="DPerfil.cs" />
+    <Compile Include="DReportes.cs" />
     <Compile Include="DUsuario.cs" />
     <Compile Include="DCotizacion.cs" />
     <Compile Include="DVenta.cs" />
+    <Compile Include="IDGeneral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

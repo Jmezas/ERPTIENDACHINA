@@ -66,6 +66,7 @@
     <Compile Include="EOrdenCompraDet.cs" />
     <Compile Include="EOrdenCompraCab.cs" />
     <Compile Include="EPerfil.cs" />
+    <Compile Include="EProductoMasVendido.cs" />
     <Compile Include="EProveedor.cs" />
     <Compile Include="EResumenDiarioBVDetalleSunat.cs" />
     <Compile Include="EResumenDiarioBVSunat.cs" />

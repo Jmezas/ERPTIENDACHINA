@@ -41,8 +41,7 @@ namespace SIS.Entity
         public float descuento { get; set; }
         public string cambio { get; set; }
         public string observacion { get; set; }
-        public int TotalR { get; set; }
-        public int TotalPagina { get; set; }
+        public int TotalR { get; set; } 
         public int item { get; set; }
         public string resolucion { get; set; }
         public string DigestValue { get; set; }
@@ -56,6 +55,9 @@ namespace SIS.Entity
         public string motivo { get; set; }
         public string fechaEnvio { get; set; }
         public string EstadoEnvio { get; set; }
-
+        public string vendedor { get; set; }
+        public string sCanalesVenta { get; set; }
+        public string TextBanco { get; set; }
+        public ETipoEnvio Envio { get; set; }
     }
 }

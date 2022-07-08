@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ProductoMasVendido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h4>
+            <i style="margin-right:7px" class="fa fa-flag"></i> PRODUCTOS MÁS VENDIDOS
+        </h4>
+    </div>
+    <nav class="col-12" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><i class="fa fa-home"></i> <a href="@Url.Action("Principal", "Seguridad")">Principal</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><i class="fa fa-flag"></i> Productos más vendidos</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <p class="text-prov">Top 10 producto más vendidos de la empresa</p>
+                <hr />
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" cellspacing="0" style="width:100%" id="tbVendidas">
+                        <thead>
+                            <tr class="text-tit" style="border:1px;">
+                                @*<th>Id</th>*@
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Cantidad vendida</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-peq"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/assets/scripts/page/Reportes/ProductoMasVendido.js"></script>
+}
+

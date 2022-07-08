@@ -33,5 +33,8 @@ namespace SIS.Entity
         public float precioDesc { get; set; }
         public float operacion { get; set; }
         public string condicionPago { get; set; }
+        public int TotalR { get; set; }
+        public int TotalPagina { get; set; }
+        public int item { get; set; }
     }
 }
