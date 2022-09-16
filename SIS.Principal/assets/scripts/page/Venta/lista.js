@@ -7,7 +7,7 @@ $(function () {
         dataType: 'json',
         data: { Flag: 2 },
         success: function (response) {
-            $("#lstUsuario").append($('<option>', { value: 0, text: 'Seleccione' }));
+            $("#lstUsuario").append($('<option>', { value: '', text: 'Seleccione' }));
             if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
 
                 $.grep(response, function (oDocumento) {
