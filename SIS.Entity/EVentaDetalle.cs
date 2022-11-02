@@ -36,5 +36,6 @@ namespace SIS.Entity
         public int TotalR { get; set; }
         public int TotalPagina { get; set; }
         public int item { get; set; }
+        public int TipoPrecio { get; set; }
     }
 }

@@ -43,6 +43,7 @@ namespace SIS.Entity
         public float PrecioUnidad { get; set; }
         public float PrecioDocena { get; set; }
         public float PrecioCaja { get; set; }
+        public long CantCaja { get; set; }
     }
     public class EModelo
     {

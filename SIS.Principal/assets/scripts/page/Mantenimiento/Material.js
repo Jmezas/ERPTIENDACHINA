@@ -426,7 +426,7 @@ $(function () {
     });
 
     $("#btnGrabar").click(function () {
-
+        console.log($("#txtCandCaja").val())
         var $form = $("#ModalNuevo");
         var oDatos = General.Utils.SerializeForm($form);
 
@@ -464,6 +464,7 @@ $(function () {
                 },
                 PrecioDocena: $("#txtPrecioDocena").val(),
                 PrecioCaja: $("#txtPrecioCaja").val(),
+                CantCaja: parseInt($("#txtCandCaja").val()),
             }
 
             $.ajax({
@@ -474,8 +475,7 @@ $(function () {
                 data: oDatos,
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
-                success: function (response) {
-                    //console.log(response);
+                success: function (response) { 
                     if (response["Id"] == TypeMessage.Success) {
 
                         Swal.fire(
@@ -601,6 +601,7 @@ var Obtener = function (Id) {
             $("#lstTalla").val(response.Talla.IdTalla);
             $("#txtPrecioDocena").val(response.PrecioDocena);
             $("#txtPrecioCaja").val(response.PrecioCaja);
+            $("#txtCandCaja").val(response.CantCaja);
 
             if (response.Id == 1) {
                 $("#idMercaderiacategoria").show();

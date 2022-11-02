@@ -178,7 +178,7 @@ $(function () {
     $('input[name="txtPrecio"]').Validate({ type: TypeValidation.Numeric, special: '.' });
     $('input[name="txtCantidad"]').Validate({ type: TypeValidation.Numeric });
 
-
+    $("#cantCaja").hide();
 
     $('#dFechaAten').datepicker({
         dateFormat: 'dd/mm/yy',
@@ -388,7 +388,7 @@ $(function () {
                             cod: item.Nombre,
                             label: item.Nombre + ' - ' + item.Codigo,
                             des: item.Nombre + '|' + item.Codigo + '|' + item.PrecioCompra + '|' + item.PrecioVenta
-                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja,
+                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja + '|' + item.CantCaja,
                             cat: item.Categoria.Nombre,
                             mar: item.Marca.Nombre,
                             und: item.Unidad.Nombre
@@ -414,6 +414,8 @@ $(function () {
             $("#unidad").val(ui.item ? ui.item.des.toString().split('|')[4] : '');
             $("#docena").val(ui.item ? ui.item.des.toString().split('|')[5] : '');
             $("#caja").val(ui.item ? ui.item.des.toString().split('|')[6] : '');
+            $("#txtCantidadxcaja").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
+            $("#txtCantidadxcajahiden").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
             $("#sCategoria").val(ui.item ? ui.item.cat.toString() : '');
             $("#sMarca").val(ui.item ? ui.item.mar.toString() : '');
             $("#sUnidad").val(ui.item ? ui.item.und.toString() : '');
@@ -509,8 +511,10 @@ $(function () {
         var descuento = $("#txtDescuento").val();
         var descuentoPorcentaje = $("#txtDescuentoPor").val();
         let Precio = $('#txtPrecio').val();
-        let Cantidad = $('#txtCantidad').val();
+        let Cantidad = parseInt($('#txtCantidad').val());
         let Total = $('#txtTotal').val();
+        let totalCantidad = 0;
+        let canCaja = parseInt($("#txtCantidadxcajahiden").val());
 
         Total = Total * 1
         Total = Precio * Cantidad
@@ -520,6 +524,12 @@ $(function () {
         $("#txtDescuento").val(descuento.toFixed(2));
         $("#txtTotal").val(Total.toFixed(2));
         $("#txtDescuentoPor").val(0.00);
+        if ($("#lstPrecio").val() === "3") {
+            console.log("Entro")
+            totalCantidad = canCaja * Cantidad
+
+            $("#txtCantidadxcaja").val(totalCantidad)
+        }
     });
 
     $("#txtPrecio").on('change', function () {
@@ -647,14 +657,19 @@ $(function () {
 
         if (IdPrecio == 1) {
             $("#txtPrecio").val(unida);
+            $("#cantCaja").hide();
         } else if (IdPrecio == 2) {
             $("#txtPrecio").val(docena);
+            $("#cantCaja").hide();
         } else if (IdPrecio == 3) {
             $("#txtPrecio").val(caja);
+            $("#cantCaja").show();
         }
     })
 
     $("#btnAgregar").click(function () {
+        let cantidadCaja = parseInt($("#txtCantidadxcaja").val())
+        let stock = parseInt($("#txtStock").val())
 
         var iIdProducto = parseInt($("#IdProducto").val());
         var producto = $("#txtProducto").val()
@@ -664,7 +679,10 @@ $(function () {
             General.Utils.ShowMessage(TypeMessage.Error, 'Debe ingresar la cantidad');
         } else if (BuscarDetalleEnTabla(iIdProducto)) {
             General.Utils.ShowMessage(TypeMessage.Error, `El producto  ${producto} ya existe en la tabla`);
-        } else {
+        } else if ($("#lstPrecio").val() == "3" && stock <= cantidadCaja) {
+            General.Utils.ShowMessage(TypeMessage.Error, 'Stock insuficiente');
+        }
+        else {
 
             Lista.Vars.Detalle.push({
                 Material: {
@@ -682,7 +700,8 @@ $(function () {
                 descuento: $("#txtDescuento").val(),
                 operacion: 1,
                 Almacen: { IdAlmacen: $("#lstAlmacen").val() },
-                Sucursal: { IdSucursal: $("#lstSucursalCab").val() }
+                Sucursal: { IdSucursal: $("#lstSucursalCab").val() },
+                TipoPrecio: $("#lstPrecio").val()
             });
             Lista.CargarOperacion();
 
@@ -698,6 +717,11 @@ $(function () {
             $("#txtDescuentoPor").val('0.00')
             $("#txtDescuento").val('0.00')
             $("#txtTotal").val('0.00')
+            $("#txtCantidadxcaja").val('0.00')
+            $("#txtCantidadxcajahiden").val('0.00')
+            $("#txtStock").val('0.00')
+            $("#lstPrecio").val(1)
+
             var $tb = $('#tbDetalle');
             $tb.find('tbody').empty();
 
@@ -1299,7 +1323,8 @@ var Obtener = function (Id) {
                     descuento: response.Descuento,
                     operacion: 1,
                     Almacen: { IdAlmacen: $("#lstAlmacen").val() },
-                    Sucursal: { IdSucursal: $("#lstSucursalCab").val() }
+                    Sucursal: { IdSucursal: $("#lstSucursalCab").val() },
+                    TipoPrecio: $("#lstPrecio").val()
                 });
 
                 CalcularTotales();
@@ -1364,7 +1389,7 @@ function BuscarIndexDetalleEnTabla(id) {
 
 function LimpiarConteniedo() {
 
- 
+
     $("#lstTipoDoc").val(0);
     $("#lstTipoPago").val(3)
     $("#txtDocCli").val('');
@@ -1384,6 +1409,15 @@ function LimpiarConteniedo() {
     $("#MontoCalulado").html('0.00');
     $("#hMonedaComprobante").html('SOLES');
     $("#MontoIGV").val();
+    $("#txtStock").val("0");
+    $("#txtPrecio").val("0");
+    $("#txtCantidad").val("0");
+    $("#txtCantidadxcaja").val("0");
+    $("#txtDescuentoPor").val("0");
+    $("#txtDescuento").val("0");
+    $("#txtTotal").val("0");
+    $("#MontoIGV").val();
+    $("#lstPrecio").val(1);
     Lista.Vars.Detalle = [];
     var $tb = $('#tbDetalle');
     $tb.find('tbody').empty();
@@ -1430,7 +1464,7 @@ function StockActual(Producto, almacen) {
         dataType: 'json',
         data: { Material: Producto, Almacen: almacen },
         success: function (response) {
-       
+
             $("#txtStock").val(response["Num"])
         }
     });

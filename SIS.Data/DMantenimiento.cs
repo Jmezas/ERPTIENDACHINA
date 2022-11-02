@@ -61,6 +61,7 @@ namespace SIS.Data
                     AddInParameter("@PorcenDscto", Material.Descuento); 
                     AddInParameter("@ndocena", Material.PrecioDocena);
                     AddInParameter("@nCaja", Material.PrecioCaja);
+                    AddInParameter("@cantCaja", Material.CantCaja);
                     AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                     ExecuteQuery();
                     var smensaje = GetOutput("@Mensaje").ToString();
@@ -115,6 +116,7 @@ namespace SIS.Data
                             obj.PrecioUnidad = float.Parse(Reader["nUnidad"].ToString());
                             obj.PrecioDocena = float.Parse(Reader["nDocena"].ToString());
                             obj.PrecioCaja = float.Parse(Reader["ncaja"].ToString());
+                            obj.CantCaja = int.Parse(Reader["cantCaja"].ToString());
                         }
                     }
                 }

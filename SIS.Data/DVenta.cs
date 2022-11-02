@@ -101,6 +101,7 @@ namespace SIS.Data
                             AddInParameter("@nDescuento", oDetalle.descuento);
                             AddInParameter("@tipoOpe", oDetalle.operacion);
                             AddInParameter("@IdAlamcen", oDetalle.Almacen.IdAlmacen);
+                            AddInParameter("@TipoPrecio", oDetalle.TipoPrecio); 
                             AddInParameter("@sCodReg", Usuario);
                             AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                             ExecuteQuery();
