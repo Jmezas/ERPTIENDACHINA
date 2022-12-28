@@ -403,67 +403,7 @@ function BuscarSunat() {
         } else {
             $.ajax({
                 type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatRUC'),
-<<<<<<< HEAD
-=======
-                beforeSend: General.Utils.StartLoading,
-                complete: General.Utils.EndLoading,
-                data: {
-                    numeroRuc: RUC
-
-                },
-                success: function (response) {
-                    console.log(response)
-                    if (response == null) {
-                        General.Utils.ShowMessage("error", "Nro. de ruc invalido, ingrese los datos manualmente");
-                    } else {
-
-
-                        $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, ""));
-                        $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " "));
-                    }
-                }
-            });
-        }
-    } else if ($("#lstTipoDoc").val() == 1) {
-        if (isNaN(RUC) || RUC.length != 8) {
-            General.Utils.ShowMessage(TypeMessage.Error, 'El DNI debe contener 8 dígitos');
-        } else {
-            $.ajax({
-                type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatDNI'),
-                data: {
-                    numeroRuc: RUC
-
-                },
-                success: function (response) {
-                    console.log(response)
-                    if (response == null) {
-                        General.Utils.ShowMessage("error", "Nro. de dni invalido, ingrese los datos manualmente");
-                    } else {
-
-
-                        $("#txtRazon").val(`${response.nombre} ${response.apellidoPaterno} ${response.apellidoMaterno}`);
-                        $("#txtDireccion").val(response.Direccion);
-                    }
-                }
-            });
-        }
-    } else {
-        General.Utils.ShowMessage(TypeMessage.Error, 'digite manualmente');
-    }
-
-} {
-
-    var RUC = $("#txtDocumento").val();
-    if ($("#lstTipoDoc").val() == 3) {
-        if (isNaN(RUC) || RUC < 10000000000 || RUC > 99999999999) {
-            General.Utils.ShowMessage(TypeMessage.Error, 'El RUC debe contener 11 dígitos');
-        } else {
-            $.ajax({
-                type: 'post',
                 url: General.Utils.ContextPath('Shared/SearchSunatRUCDNI'),
->>>>>>> e52d9658d28e2c8a49099086987f79f6a54a4c79
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
                 data: {
