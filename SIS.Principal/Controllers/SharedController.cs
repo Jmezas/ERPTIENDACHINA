@@ -357,10 +357,7 @@ namespace SIS.Principal.Controllers
 
         }
 
-<<<<<<< HEAD
-        //buscar api
-=======
->>>>>>> e52d9658d28e2c8a49099086987f79f6a54a4c79
+ 
         [HttpPost]
         public void SearchSunatRUC(string numeroRuc)
         {
@@ -401,12 +398,7 @@ namespace SIS.Principal.Controllers
                   ResponseType.JSON,
                   "{ Code: 1, ErrorMessage: \"" + Exception.Message + "\" }"
               );
-            } 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> e52d9658d28e2c8a49099086987f79f6a54a4c79
+            }  
         }
 
         [HttpPost]
