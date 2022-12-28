@@ -46,6 +46,7 @@
     <Compile Include="ECategoria.cs" />
     <Compile Include="ECliente.cs" />
     <Compile Include="EComprobanteFac.cs" />
+    <Compile Include="EConsultaRuc.cs" />
     <Compile Include="EConsultaRUCDNI.cs" />
     <Compile Include="ECotizacion.cs" />
     <Compile Include="EDetCotizacion.cs" />

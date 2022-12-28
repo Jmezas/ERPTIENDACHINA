@@ -58,9 +58,10 @@ namespace SIS.Entity
     public class EconsultaDNI
     {
         public string dni { get; set; }
-        public string nombres { get; set; }
+        public string nombre { get; set; }
         public string apellidoPaterno { get; set; }
         public string apellidoMaterno { get; set; }
         public string codVerifica { get; set; }
+        public string respuesta { get; set; }
     }
 }

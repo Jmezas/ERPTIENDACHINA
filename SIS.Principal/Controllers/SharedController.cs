@@ -357,6 +357,93 @@ namespace SIS.Principal.Controllers
 
         }
 
+        [HttpPost]
+        public void SearchSunatRUC(string numeroRuc)
+        {
 
+            var client = new RestClient(WebConfigurationManager.AppSettings["UrlConsultaDocumento"]);
+            var url = client.BaseUrl + "ruc/" + numeroRuc;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (Stream strReader = response.GetResponseStream())
+                    {
+                        if (strReader == null)
+                        {
+                            Utils.Write(
+                                 ResponseType.JSON,
+                                "{ Code: 1, ErrorMessage: \"" + "Paso algo en la consulta API" + "\" }");
+                        }
+                        using (StreamReader objReader = new StreamReader(strReader))
+                        {
+                            string responseBody = objReader.ReadToEnd();
+
+                            var jsonObjects = JsonConvert.DeserializeObject<object>(responseBody);
+                            var model = JsonConvert.DeserializeObject<EConsultaRuc>(jsonObjects.ToString());
+                            Utils.Write(ResponseType.JSON, model);
+                        }
+                    }
+                }
+            }
+            catch (Exception Exception)
+            {
+
+                Utils.Write(
+                  ResponseType.JSON,
+                  "{ Code: 1, ErrorMessage: \"" + Exception.Message + "\" }"
+              );
+            } 
+
+
+        }
+
+        [HttpPost]
+        public void SearchSunatDNI(string numeroRuc)
+        {
+
+            var client = new RestClient(WebConfigurationManager.AppSettings["UrlConsultaDocumento"]);
+            var url = client.BaseUrl + "dni/" + numeroRuc;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (Stream strReader = response.GetResponseStream())
+                    {
+                        if (strReader == null)
+                        {
+                            Utils.Write(
+                                 ResponseType.JSON,
+                                "{ Code: 1, ErrorMessage: \"" + "Paso algo en la consulta API" + "\" }");
+                        }
+                        using (StreamReader objReader = new StreamReader(strReader))
+                        {
+                            string responseBody = objReader.ReadToEnd();
+
+                            var jsonObjects = JsonConvert.DeserializeObject<object>(responseBody);
+                            var model = JsonConvert.DeserializeObject<EconsultaDNI>(jsonObjects.ToString());
+                            Utils.Write(ResponseType.JSON, model);
+                        }
+                    }
+                }
+            }
+            catch (Exception Exception)
+            {
+
+                Utils.Write(
+                  ResponseType.JSON,
+                  "{ Code: 1, ErrorMessage: \"" + Exception.Message + "\" }"
+              );
+            }
+        }
     }
 }
