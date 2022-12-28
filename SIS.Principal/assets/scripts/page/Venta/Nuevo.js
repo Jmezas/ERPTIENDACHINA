@@ -388,7 +388,7 @@ $(function () {
                             cod: item.Nombre,
                             label: item.Nombre + ' - ' + item.Codigo,
                             des: item.Nombre + '|' + item.Codigo + '|' + item.PrecioCompra + '|' + item.PrecioVenta
-                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja + '|' + item.CantCaja,
+                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja + '|' + item.CantCaja + '|' + item.PrecioMedia + '|' + item.PrecioCuarto,
                             cat: item.Categoria.Nombre,
                             mar: item.Marca.Nombre,
                             und: item.Unidad.Nombre
@@ -414,8 +414,8 @@ $(function () {
             $("#unidad").val(ui.item ? ui.item.des.toString().split('|')[4] : '');
             $("#docena").val(ui.item ? ui.item.des.toString().split('|')[5] : '');
             $("#caja").val(ui.item ? ui.item.des.toString().split('|')[6] : '');
-            $("#txtCantidadxcaja").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
-            $("#txtCantidadxcajahiden").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
+            $("#media").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
+            $("#cuarto").val(ui.item ? ui.item.des.toString().split('|')[8] : '');
             $("#sCategoria").val(ui.item ? ui.item.cat.toString() : '');
             $("#sMarca").val(ui.item ? ui.item.mar.toString() : '');
             $("#sUnidad").val(ui.item ? ui.item.und.toString() : '');
@@ -654,14 +654,26 @@ $(function () {
         var unida = $("#unidad").val();
         var caja = $("#caja").val();
         var docena = $("#docena").val();
+        var cuarto = $("#cuarto").val();
+        var media = $("#media").val();
 
         if (IdPrecio == 1) {
             $("#txtPrecio").val(unida);
             $("#cantCaja").hide();
         } else if (IdPrecio == 2) {
-            $("#txtPrecio").val(docena);
+            $("#txtPrecio").val(cuarto);
             $("#cantCaja").hide();
         } else if (IdPrecio == 3) {
+            $("#txtPrecio").val(media);
+            $("#cantCaja").show();
+            $("#cantCaja").hide();
+        }
+        else if (IdPrecio == 4) { 
+            $("#txtPrecio").val(docena);
+            $("#cantCaja").show();
+            $("#cantCaja").hide();
+        }
+        else if (IdPrecio == 5) {
             $("#txtPrecio").val(caja);
             $("#cantCaja").show();
         }

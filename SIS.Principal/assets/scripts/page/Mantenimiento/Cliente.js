@@ -403,71 +403,22 @@ function BuscarSunat() {
         } else {
             $.ajax({
                 type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatRUCDNI'),
+                url: General.Utils.ContextPath('Shared/SearchSunatRUC'),
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
                 data: {
-                    tipo: $("#lstTipoDoc").val(),
                     numeroRuc: RUC
 
                 },
                 success: function (response) {
+                    console.log(response)
                     if (response == null) {
                         General.Utils.ShowMessage("error", "Nro. de ruc invalido, ingrese los datos manualmente");
                     } else {
-
-                        $("#txtRazon").val(response.razonSocial);
-                        $("#txtDireccion").val(response.direccion);
-
-                        var ubigeo = response.ubigeo
-                        if (ubigeo != null) {
-
-
-
-                            $("#lstDepartamento").val(ubigeo.substr(0, 2));
-                            $.ajax({
-                                async: true,
-                                type: 'post',
-                                url: General.Utils.ContextPath("Shared/ListarUbigeo"),
-                                dataType: 'json',
-                                data: { Acction: "PROVINCIA", IdPais: '001', IdDep: $("#lstDepartamento").val(), IdProv: "", IdDis: "" },
-                                success: function (response) {
-                                    //console.log(response)
-                                    if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
-                                        $.grep(response, function (oDocumento) {
-                                            $('select[name="lstProvincia"]').append($('<option>', { value: oDocumento["CodigoInei"], text: oDocumento["Nombre"] }));
-
-                                        });
-                                        $("#lstProvincia").val(ubigeo.substr(2, 2));
-                                    }
-                                }
-
-                            });
-
-                            //distrito
-                            $.ajax({
-                                async: true,
-                                type: 'post',
-                                url: General.Utils.ContextPath("Shared/ListarUbigeo"),
-                                dataType: 'json',
-                                data: { Acction: "DISTRITO", IdPais: '001', IdDep: $("#lstDepartamento").val(), IdProv: ubigeo.substr(2, 2), IdDis: "" },
-                                success: function (response) {
-                                    // console.log(response)
-                                    if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
-                                        $.grep(response, function (oDocumento) {
-                                            $('select[name="lstDistrito"]').append($('<option>', { value: oDocumento["CodigoInei"], text: oDocumento["Nombre"] }));
-
-                                        });
-                                        $("#lstDistrito").val(ubigeo.substr(4, 2));
-
-                                    }
-                                }
-
-                            });
-
-
-
-                        }
+ 
+                        
+                        $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, ""));
+                        $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " ") );
                     }
                 }
             });
@@ -478,19 +429,22 @@ function BuscarSunat() {
         } else {
             $.ajax({
                 type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatRUCDNI'),
+                url: General.Utils.ContextPath('Shared/SearchSunatDNI'),
                 data: {
-                    tipo: $("#lstTipoDoc").val(),
                     numeroRuc: RUC
 
                 },
+                beforeSend: General.Utils.StartLoading,
+                complete: General.Utils.EndLoading,
                 success: function (response) {
-                    //console.log(response)
+                    console.log(response)
                     if (response == null) {
                         General.Utils.ShowMessage("error", "Nro. de dni invalido, ingrese los datos manualmente");
                     } else {
-                        $("#txtRazon").val(response.nombres + ' ' + response.apellidoPaterno + ' ' + response.apellidoMaterno);
-                        $("#txtDireccion").val("-");
+
+
+                        $("#txtRazon").val(`${response.nombre} ${response.apellidoPaterno} ${response.apellidoMaterno}`);
+                        $("#txtDireccion").val(response.Direccion);
                     }
                 }
             });

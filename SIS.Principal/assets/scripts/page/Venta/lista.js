@@ -127,7 +127,7 @@ $(function () {
         var data = $(this).closest('tr').attr('data-id');
         //imprimirFacBol
         //ImprimirFacturaBolTikect
-        var URL = General.Utils.ContextPath('Venta/imprimirFacBol?Id=' + data + "&Envio=" + 1 + "&venta=" + 1);
+        var URL = General.Utils.ContextPath('Venta/ImprimirFacturaBolTikect?Id=' + data + "&Envio=" + 1 + "&venta=" + 1);
         // console.log(URL); 
         fileDownnload(URL);
     })
