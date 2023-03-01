@@ -403,7 +403,7 @@ function BuscarSunat() {
         } else {
             $.ajax({
                 type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatRUC'),
+                url: General.Utils.ContextPath('Shared/SearchSunatRUCDNI'),
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
                 data: {
@@ -415,10 +415,17 @@ function BuscarSunat() {
                     if (response == null) {
                         General.Utils.ShowMessage("error", "Nro. de ruc invalido, ingrese los datos manualmente");
                     } else {
+<<<<<<< HEAD
 
 
                         $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, " "));
                         $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " "));
+=======
+ 
+                        
+                        $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, ""));
+                        $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " ") );
+>>>>>>> 5d740fdbb9cbbec8bfe225082b3ee373b2ac10d9
                     }
                 }
             });
@@ -451,6 +458,12 @@ function BuscarSunat() {
         }
     } else {
         General.Utils.ShowMessage(TypeMessage.Error, 'digite manualmente');
+<<<<<<< HEAD
     } 
 }
  
+=======
+    }
+
+}
+>>>>>>> 5d740fdbb9cbbec8bfe225082b3ee373b2ac10d9

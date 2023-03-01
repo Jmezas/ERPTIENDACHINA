@@ -485,6 +485,8 @@ $(function () {
                 },
                 PrecioDocena: $("#txtPrecioDocena").val(),
                 PrecioCaja: $("#txtPrecioCaja").val(),
+                PrecioCuarto: $("#txtPrecioCuarto").val(),
+                PrecioMedia: $("#txtPrecioMedia").val(), 
                 CantCaja: parseInt($("#txtCandCaja").val()),
                 tipoEmpresa: parseInt($("#lstempresa").val()),
             }
@@ -624,6 +626,8 @@ var Obtener = function (Id) {
             $("#txtPrecioDocena").val(response.PrecioDocena);
             $("#txtPrecioCaja").val(response.PrecioCaja);
             $("#txtCandCaja").val(response.CantCaja);
+            $("#txtPrecioCuarto").val(response.PrecioCuarto);
+            $("#txtPrecioMedia").val(response.PrecioMedia);
 
             $("#lstempresa").val(response.tipoEmpresa);
             $("#lstCategoria").val(response.Categoria.IdCateogira);    
@@ -759,6 +763,8 @@ function Limpiar() {
     $('#txtDescuento').val('0.00');
     $('#txtPrecioDocena').val('0.00');
     $('#txtPrecioCaja').val('0.00');
+    $('#txtPrecioCuarto').val('0.00');
+    $('#txtPrecioMedia').val('0.00');
 }
 
 function cargarTipo(id) {

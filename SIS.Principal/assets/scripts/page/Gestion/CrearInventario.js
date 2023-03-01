@@ -534,7 +534,7 @@ $(function () {
 });
 
 function CalcularTotales() {
-    var TotalValorVta = Total = ImpTotalVta = Igv = TotalSub = Cantidad = 0;
+    let TotalValorVta = Total = ImpTotalVta = Igv = TotalSub = Cantidad = 0;
 
     if ($("#CalIGV").prop('checked')) {
         $.grep(Lista.Vars.Detalle, function (oDetalle) {
@@ -549,7 +549,7 @@ function CalcularTotales() {
             ImpTotalVta += SubTotalCal
 
 
-            Cantidad += oDetalle["Cantidad"];
+            Cantidad += parseFloat(oDetalle["Cantidad"]);
             console.log(Cantidad)
 
         });
@@ -559,7 +559,7 @@ function CalcularTotales() {
         $('#MontoSubtotal').html(ImpTotalVta.toFixed(2)); // sub total 
         $('#MontoCalulado').html(Total.toFixed(2));//esto! // Total
         $('#MontoIGV').html(IgvSuma.toFixed(2)); // igv 
-        $('#mCant').html(Cantidad);
+        $('#mCant').html(parseFloat(Cantidad.toFixed(2)));
         $('#subtotales').val(ImpTotalVta);
         $('#igv').val(IgvSuma);
         $('#Totales').val(Total);
@@ -571,7 +571,7 @@ function CalcularTotales() {
             TotalSub += subTotal;
 
 
-            Cantidad += oDetalle["Cantidad"];
+            Cantidad += parseFloat(oDetalle["Cantidad"]);
         });
 
         Igv = TotalSub * 0.18;
@@ -582,7 +582,7 @@ function CalcularTotales() {
         $('#MontoSubtotal').html(TotalSub.toFixed(2)); // sub total
         $('#MontoCalulado').html(Total.toFixed(2));//esto! // Total
         $('#MontoIGV').html(Igv.toFixed(2)); // igv
-        $('#mCant').html(Cantidad);
+        $('#mCant').html(parseFloat(Cantidad.toFixed(2)));
 
         $('#subtotales').val(TotalSub);
         $('#igv').val(Igv);
