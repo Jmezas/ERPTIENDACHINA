@@ -44,6 +44,8 @@ namespace SIS.Entity
         public float PrecioDocena { get; set; }
         public float PrecioCaja { get; set; }
         public long CantCaja { get; set; }
+        public int tipoEmpresa { get; set; }
+        public string stipoEmpresa { get; set; }
     }
     public class EModelo
     {

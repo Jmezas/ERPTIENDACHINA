@@ -443,6 +443,7 @@ namespace SIS.Data
                             obj.descuento = float.Parse(Reader["nDescuento"].ToString());
                             obj.IdVentaDetalle = int.Parse(Reader["item"].ToString());
                             obj.material.IdMaterial = int.Parse(Reader["iIdProducto"].ToString());
+                            obj.material.stipoEmpresa = Reader["empresa"].ToString();
                             oDatos.Add(obj);
                         }
                     }

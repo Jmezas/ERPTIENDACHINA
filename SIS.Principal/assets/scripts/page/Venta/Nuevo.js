@@ -1,20 +1,5 @@
 ﻿
-var Lista = {
-    //CargarSerieDoc: function () {
-
-    //    $.ajax({
-    //        async: true,
-    //        type: 'post',
-    //        url: General.Utils.ContextPath("venta/SerieNumero"),
-    //        dataType: 'json',
-    //        data: { documento: 1 },
-    //        success: function (response) {
-
-    //            $("#txtSerie").val(response.Text)
-    //            $("#txtNumero").val(response.Nombre)
-    //        }
-    //    });
-    //},
+var Lista = { 
     CargarCombo: function () {
         $.ajax({
             async: true,
@@ -163,8 +148,7 @@ var Lista = {
 }
 
 
-$(function () {
-    //Lista.CargarSerieDoc();
+$(function () { 
     Lista.CargarCombo();
     Lista.CargarTipoPago();
     Lista.CargarMoneda();
@@ -388,7 +372,8 @@ $(function () {
                             cod: item.Nombre,
                             label: item.Nombre + ' - ' + item.Codigo,
                             des: item.Nombre + '|' + item.Codigo + '|' + item.PrecioCompra + '|' + item.PrecioVenta
-                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja + '|' + item.CantCaja,
+                                + '|' + item.PrecioUnidad + '|' + item.PrecioDocena + '|' + item.PrecioCaja + '|' + item.CantCaja
+                                + '|' + item.stipoEmpresa,
                             cat: item.Categoria.Nombre,
                             mar: item.Marca.Nombre,
                             und: item.Unidad.Nombre
@@ -416,6 +401,7 @@ $(function () {
             $("#caja").val(ui.item ? ui.item.des.toString().split('|')[6] : '');
             $("#txtCantidadxcaja").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
             $("#txtCantidadxcajahiden").val(ui.item ? ui.item.des.toString().split('|')[7] : '');
+            $("#txtempresa").val(ui.item ? ui.item.des.toString().split('|')[8] : '');
             $("#sCategoria").val(ui.item ? ui.item.cat.toString() : '');
             $("#sMarca").val(ui.item ? ui.item.mar.toString() : '');
             $("#sUnidad").val(ui.item ? ui.item.und.toString() : '');
@@ -590,12 +576,9 @@ $(function () {
 
         desUnidad = precio - descuentoMonto;
 
-        // = Total * 1
+    
         Total = desUnidad * cantidad;
-        // resta = Total - descuento;
-
-        //alert(Total);   
-        //alert(descuento);
+     
         $("#hdfprecio").val(desUnidad.toFixed(2));
         $("#txtDescuentoPor").val(descuentoPorcentaje.toFixed(2));
         $("#txtTotal").val(Total.toFixed(2));
@@ -690,6 +673,7 @@ $(function () {
                     Codigo: $("#sCodigo").val(),
                     Nombre: $("#txtProducto").val(),
                 },
+                Empresa: $("#txtempresa").val(),
                 Categoria: $("#sCategoria").val(),
                 Marca: $("#sMarca").val(),
                 Unidad: $("#sUnidad").val(),
@@ -734,12 +718,13 @@ $(function () {
                         '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                         '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                         '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                        '<td>' + oDetalle["Empresa"] + '</td>' +
                         '<td>' + oDetalle["Unidad"] + '</td>' +
                         //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"></select>' + '</td>' +
                         //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                        '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                        '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '"disabled>' + '</td>' +
                         '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + formatNumber(oDetalle["Cantidad"]) + '">' + '</td>' +
-                        '<td>' + '<input type="text" class="form-control Price" id="Precio" disabled value="' + formatNumber(oDetalle["Precio"]) + '">' + '</td>' +
+                        '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + formatNumber(oDetalle["Precio"]) + '"disabled>' + '</td>' +
                         '<td>' + formatNumber(oDetalle["Importe"]) + '</td>' +
                         '<td class="text-center">' +
                         '<button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>' +
@@ -791,10 +776,11 @@ $(function () {
                     '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                     '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                     '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                    '<td>' + oDetalle["Empresa"] + '</td>' +
                     '<td>' + oDetalle["Unidad"] + '</td>' +
                     //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"></select>' + '</td>' +
                     //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '" disabled>' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + oDetalle["Cantidad"] + '">' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + oDetalle["Precio"] + '" disabled>' + '</td>' +
                     '<td>' + (oDetalle["Importe"] * 1).toFixed(2) + '</td>' +
@@ -835,10 +821,11 @@ $(function () {
                     '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                     '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                     '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                    '<td>' + oDetalle["Empresa"] + '</td>' +
                     '<td>' + oDetalle["Unidad"] + '</td>' +
                     //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"></select>' + '</td>' +
                     //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '"disabled>' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + oDetalle["Cantidad"] + '">' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + oDetalle["Precio"] + '" disabled>' + '</td>' +
                     '<td>' + (oDetalle["Importe"] * 1).toFixed(2) + '</td>' +
@@ -962,10 +949,11 @@ $(function () {
                     '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                     '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                     '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                    '<td>' + oDetalle["Empresa"] + '</td>' +
                     '<td>' + oDetalle["Unidad"] + '</td>' +
                     //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"></select>' + '</td>' +
                     //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '"disabled>' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + oDetalle["Cantidad"] + '">' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + oDetalle["Precio"] + '" disabled>' + '</td>' +
                     '<td>' + (oDetalle["Importe"] * 1).toFixed(2) + '</td>' +
@@ -1017,10 +1005,11 @@ $(function () {
                     '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                     '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                     '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                    '<td>' + oDetalle["Empresa"] + '</td>' +
                     '<td>' + oDetalle["Unidad"] + '</td>' +
                     //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"></select>' + '</td>' +
                     //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                    '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '"disabled>' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + oDetalle["Cantidad"] + '">' + '</td>' +
                     '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + oDetalle["Precio"] + '" disabled>' + '</td>' +
                     '<td>' + (oDetalle["Importe"] * 1).toFixed(2) + '</td>' +
@@ -1313,6 +1302,7 @@ var Obtener = function (Id) {
                         Codigo: response.Codigo,
                         Nombre: response.Nombre,
                     },
+                    Empresa: response.stipoEmpresa,
                     Categoria: response.Categoria.Nombre,
                     Marca: response.Marca.Nombre,
                     Unidad: response.Unidad.Nombre,
@@ -1341,10 +1331,11 @@ var Obtener = function (Id) {
                             '<tr data-index=' + oDetalle["Material"]["IdMaterial"] + '>' +
                             '<td>' + oDetalle["Material"]["Codigo"] + '</td>' +
                             '<td>' + oDetalle["Material"]["Nombre"] + '</td>' +
+                            '<td>' + oDetalle["Empresa"] + '</td>' +
                             '<td>' + oDetalle["Unidad"] + '</td>' +
                             //'<td>' + '<select id="lstOperacion" name="lstOperacion" class="form-control select"  value="' + oDetalle["operacion"] + '"></select>' + '</td>' +
                             //'<td>' + '<input type="text" class="form-control por" id="descuentoPor" value="' + oDetalle["descuentopor"] + '">' + '</td>' +
-                            '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '">' + '</td>' +
+                            '<td>' + '<input type="text" class="form-control desc" id="descuento"   value="' + oDetalle["descuento"] + '"disabled>' + '</td>' +
                             '<td>' + '<input type="text" class="form-control Cant" id="Cantidad"  value="' + oDetalle["Cantidad"] + '">' + '</td>' +
                             '<td>' + '<input type="text" class="form-control Price" id="Precio"  value="' + oDetalle["Precio"] + '" disabled>' + '</td>' +
                             '<td>' + (oDetalle["Importe"] * 1).toFixed(2) + '</td>' +

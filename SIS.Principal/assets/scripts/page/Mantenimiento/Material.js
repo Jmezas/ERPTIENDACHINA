@@ -139,6 +139,26 @@ var Lista = {
 
         });
     },
+    cargarTipoEmpresa: function () {
+        $.ajax({
+            async: true,
+            type: 'post',
+            url: General.Utils.ContextPath("Shared/ListaCombo"),
+            dataType: 'json',
+            data: { Id: 25 },
+            success: function (response) {
+
+                $("#lstempresa").append($('<option>', { value: 0, text: 'Seleccione' }));
+                if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
+
+                    $.grep(response, function (oDocumento) {
+                        $('select[name="lstempresa"]').append($('<option>', { value: oDocumento["Id"], text: oDocumento["Nombre"] }));
+                    });
+                }
+            }
+
+        });
+    },
 }
 
 $(function () {
@@ -159,6 +179,7 @@ $(function () {
     Lista.cargarSubCategoria();
     Lista.cargarTemporada();
     Lista.cargarTalla();
+    Lista.cargarTipoEmpresa()
 
 
     //* cargar lista predetermianda*//
@@ -189,7 +210,7 @@ $(function () {
         }
 
     })
-    
+
     var table = $("#tbMaterial").DataTable({
         select: true,
         pageLength: 10,
@@ -208,7 +229,7 @@ $(function () {
             type: "POST",
             datatype: "json",
             data: function (d) {
-                
+
             }
         },
         columns: [
@@ -226,15 +247,15 @@ $(function () {
             { "data": "SubCateoria.Nombre", "name": "SubCateoria" },
             //{ "data": "Descuento" },
             {
-                    "data": "IdMaterial", "render": function (data) {
-                        return '<button class="btn btn-warning btn-xs evento" data-toggle="modal" data-target="#ModalNuevo" onclick="Obtener(' + data + ');"><i class="fa fa-edit"></i> </button>' +
-                            "&nbsp; " + '<button class="btn btn-danger btn-xs Eliminar" data-toggle="modal" data-target="#Eliminar"  "><i class="fa fa-trash"></i> </button>';
+                "data": "IdMaterial", "render": function (data) {
+                    return '<button class="btn btn-warning btn-xs evento" data-toggle="modal" data-target="#ModalNuevo" onclick="Obtener(' + data + ');"><i class="fa fa-edit"></i> </button>' +
+                        "&nbsp; " + '<button class="btn btn-danger btn-xs Eliminar" data-toggle="modal" data-target="#Eliminar"  "><i class="fa fa-trash"></i> </button>';
 
-                    },
+                },
 
-        
-        }
-            
+
+            }
+
         ],
         buttons: [
             {
@@ -255,7 +276,7 @@ $(function () {
                     $('row c[r^="C"]', sheet).attr('s', '2');
                 }
             }
-           
+
         ],
         'columnDefs': [
             {
@@ -276,7 +297,7 @@ $(function () {
 
     });
 
-    
+
 
     $("#btnBarra").click(function () {
         var form = this;
@@ -325,8 +346,8 @@ $(function () {
                 );
             });
             CallCantidad();
-        } 
-   
+        }
+
         // Eliminar elementos añadidos
         $('input[name="id\[\]"]', form).remove();
 
@@ -465,6 +486,7 @@ $(function () {
                 PrecioDocena: $("#txtPrecioDocena").val(),
                 PrecioCaja: $("#txtPrecioCaja").val(),
                 CantCaja: parseInt($("#txtCandCaja").val()),
+                tipoEmpresa: parseInt($("#lstempresa").val()),
             }
 
             $.ajax({
@@ -475,7 +497,7 @@ $(function () {
                 data: oDatos,
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
-                success: function (response) { 
+                success: function (response) {
                     if (response["Id"] == TypeMessage.Success) {
 
                         Swal.fire(
@@ -603,6 +625,9 @@ var Obtener = function (Id) {
             $("#txtPrecioCaja").val(response.PrecioCaja);
             $("#txtCandCaja").val(response.CantCaja);
 
+            $("#lstempresa").val(response.tipoEmpresa);
+            $("#lstCategoria").val(response.Categoria.IdCateogira);    
+
             if (response.Id == 1) {
                 $("#idMercaderiacategoria").show();
                 $("#idmercaderiaGe").show();
@@ -663,29 +688,9 @@ var Obtener = function (Id) {
                 }
 
             });
-            /*categoria*/
+            
 
-            $.ajax({
-                async: true,
-                type: 'post',
-                url: General.Utils.ContextPath("Shared/ListaComboId"),
-                dataType: 'json',
-                data: { flag: 5, Id: response.Id },
-                success: function (response) {
-
-                    $("#lstCategoria").empty();
-                    $("#lstCategoria").append($('<option>', { value: 0, text: 'Seleccione' }));
-                    if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
-
-                        $.grep(response, function (oDocumento) {
-
-                            $('select[name="lstCategoria"]').append($('<option>', { value: oDocumento["Id"], text: oDocumento["Nombre"] }));
-                        });
-                    }
-                    $("#lstCategoria").val(categoria)
-                }
-
-            });
+          
             /*corlor*/
             $.ajax({
                 async: true,
@@ -747,6 +752,7 @@ function Limpiar() {
     $("#lstTemporada").val('0');
     $("#lstTalla").val('0');
     $("#lstMarca").val('0');
+    $("#lstempresa").val('0');
     $("#txtModelo").val('');
     $('#txtPrecioComp').val('0.00');
     $('#txtPrecioVent').val('0.00');

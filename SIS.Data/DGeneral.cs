@@ -308,6 +308,7 @@ namespace SIS.Data
                             obj.PrecioDocena = float.Parse(Reader["nDocena"].ToString());
                             obj.PrecioCaja = float.Parse(Reader["ncaja"].ToString());
                             obj.CantCaja = int.Parse(Reader["cantCaja"].ToString());
+                            obj.stipoEmpresa = Reader["empresa"].ToString();
                             lUbigeo.Add(obj);
                         }
                     }

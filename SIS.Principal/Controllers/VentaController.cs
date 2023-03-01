@@ -1337,21 +1337,25 @@ namespace SIS.Principal.Controllers
                 cCelda.PaddingBottom = 2;
                 tblPrueba.AddCell(cCelda);
 
-                PdfPTable Tableitems = new PdfPTable(6);
+                PdfPTable Tableitems = new PdfPTable(7);
                 Tableitems.WidthPercentage = 100;
 
-                float[] celdas2 = new float[] { 1.0F, 1.0F, 1.0F, 2.0F, 1.0F, 1.0F };
+                float[] celdas2 = new float[] { 1.0F, 1.0F, 1.0F, 1.0F, 2.0F, 1.0F, 1.0F };
                 Tableitems.SetWidths(celdas2);
 
                 PdfPCell cTituloCodigo = new PdfPCell(new Phrase("CANT", _standardFontTabla));
                 cTituloCodigo.BorderWidthBottom = 1;
                 cTituloCodigo.HorizontalAlignment = 1; // 0 = izquierda, 1 = centro, 2 = derecha
-                cTituloCodigo.Padding = 5;
-               // cTituloCodigo.BackgroundColor = new Color(System.Drawing.Color.MidnightBlue);
+                cTituloCodigo.Padding = 5; 
                 Tableitems.AddCell(cTituloCodigo);
 
-                PdfPCell cTituloDesc = new PdfPCell(new Phrase("UNID", _standardFontTabla));
+                PdfPCell cTituloEmpresa = new PdfPCell(new Phrase("EMP", _standardFontTabla));
+                cTituloEmpresa.BorderWidthBottom = 1;
+                cTituloEmpresa.HorizontalAlignment = 1; // 0 = izquierda, 1 = centro, 2 = derecha
+                cTituloEmpresa.Padding = 5;
+                Tableitems.AddCell(cTituloEmpresa);
 
+                PdfPCell cTituloDesc = new PdfPCell(new Phrase("UNID", _standardFontTabla)); 
                 cTituloDesc.BorderWidthBottom = 1;
                 cTituloDesc.HorizontalAlignment = 1; // 0 = izquierda, 1 = centro, 2 = derecha
                 cTituloDesc.Padding = 5;
@@ -1401,6 +1405,14 @@ namespace SIS.Principal.Controllers
                     cCodigo.HorizontalAlignment = 1;
                     cCodigo.Border = Rectangle.LEFT_BORDER;
                     Tableitems.AddCell(cCodigo);
+
+                    PdfPCell cNombreEmpresa = new PdfPCell(new Phrase(ListaRep.material.stipoEmpresa, _standardFont));
+                    cNombreEmpresa.Border = 0;
+                    cNombreEmpresa.Padding = 2;
+                    cNombreEmpresa.PaddingBottom = 2;
+                    cNombreEmpresa.HorizontalAlignment = 1;
+                    cNombreEmpresa.Border = Rectangle.LEFT_BORDER;
+                    Tableitems.AddCell(cNombreEmpresa);
 
                     PdfPCell cNombreMat = new PdfPCell(new Phrase(ListaRep.material.Unidad.Nombre, _standardFont));
                     cNombreMat.Border = 0;
@@ -1522,13 +1534,7 @@ namespace SIS.Principal.Controllers
                 cResolucion.PaddingBottom = 2;
                 cResolucion.HorizontalAlignment = 0;
                 cResolucion.Colspan = 1;
-                TableValorqr.AddCell(cResolucion);
-
-                //PdfPCell cCeldaValorss = new PdfPCell(TableValorqr);
-                //cCeldaValorss.Colspan = 0;
-                //cCeldaValorss.Border = 0;
-                //cCeldaValorss.PaddingBottom = 4;
-                //tblPrueba.AddCell(cCeldaValorss);
+                TableValorqr.AddCell(cResolucion); 
 
                 PdfPTable TableValor = new PdfPTable(2);
                 TableValor.TotalWidth = 225.0F;
@@ -1539,115 +1545,7 @@ namespace SIS.Principal.Controllers
 
                 float[] celdas = new float[] { 1.0F, 1.0F };
                 TableValor.SetWidths(celdas);
-                /*
-                PdfPCell cTituloSub = new PdfPCell(new Phrase("Ope. Grabda", _standarTextoNegrita));
-                cTituloSub.Border = 0;
-                // cTituloSub.Colspan = 4;
-                cTituloSub.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cTituloSub.BorderWidthLeft = 1f;
-                cTituloSub.BorderWidthTop = 1f;
-                cTituloSub.Padding = 2;
-                TableValor.AddCell(cTituloSub);
-
-                PdfPCell cCeldaSubtotal = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.grabada), _standarTextoNegrita));
-                cCeldaSubtotal.Border = 0;
-                // cCeldaSubtotal.Colspan = 2
-                cCeldaSubtotal.HorizontalAlignment = 2;
-                cCeldaSubtotal.BorderWidthRight = 1f;
-                cCeldaSubtotal.BorderWidthTop = 1f;
-                cCeldaSubtotal.Padding = 2;
-                TableValor.AddCell(cCeldaSubtotal);
-
-                PdfPCell cexonerada = new PdfPCell(new Phrase("Ope. exonerada ", _standarTextoNegrita));
-                cexonerada.Border = 0;
-                // cTituloSub.Colspan = 4;
-                cexonerada.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cexonerada.BorderWidthLeft = 1f;
-                //  cexonerada.BorderWidthTop = 1f;
-                cexonerada.Padding = 2;
-                TableValor.AddCell(cexonerada);
-
-                PdfPCell celexonerada = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.exonerada), _standarTextoNegrita));
-                celexonerada.Border = 0;
-                // cCeldaSubtotal.Colspan = 2
-                celexonerada.HorizontalAlignment = 2;
-                celexonerada.BorderWidthRight = 1f;
-                //  celexonerada.BorderWidthTop = 1f;
-                celexonerada.Padding = 2;
-                TableValor.AddCell(celexonerada);
-
-                PdfPCell cinafecta = new PdfPCell(new Phrase("Ope. inafecta ", _standarTextoNegrita));
-                cinafecta.Border = 0;
-                // cTituloSub.Colspan = 4;
-                cinafecta.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cinafecta.BorderWidthLeft = 1f;
-                // cinafecta.BorderWidthTop = 1f;
-                cinafecta.Padding = 2;
-                TableValor.AddCell(cinafecta);
-
-                PdfPCell cCelinafecta = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.inafecta), _standarTextoNegrita));
-                cCelinafecta.Border = 0;
-                // cCeldaSubtotal.Colspan = 2
-                cCelinafecta.HorizontalAlignment = 2;
-                cCelinafecta.BorderWidthRight = 1f;
-                // cCelinafecta.BorderWidthTop = 1f;
-                cCelinafecta.Padding = 2;
-                TableValor.AddCell(cCelinafecta);
-
-
-                PdfPCell cgratuita = new PdfPCell(new Phrase("Ope. Gratuita ", _standarTextoNegrita));
-                cgratuita.Border = 0;
-                // cTituloSub.Colspan = 4;
-                cgratuita.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cgratuita.BorderWidthLeft = 1f;
-                // cinafecta.BorderWidthTop = 1f;
-                cgratuita.Padding = 2;
-                TableValor.AddCell(cgratuita);
-
-                PdfPCell cCelcgratuita = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.gratuita), _standarTextoNegrita));
-                cCelcgratuita.Border = 0;
-                // cCeldaSubtotal.Colspan = 2
-                cCelcgratuita.HorizontalAlignment = 2;
-                cCelcgratuita.BorderWidthRight = 1f;
-                // cCelinafecta.BorderWidthTop = 1f;
-                cCelcgratuita.Padding = 2;
-                TableValor.AddCell(cCelcgratuita);
-
-
-                PdfPCell cdescuento = new PdfPCell(new Phrase("Total descuento", _standarTextoNegrita));
-                cdescuento.Border = 0;
-                // cTituloSub.Colspan = 4;
-                cdescuento.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cdescuento.BorderWidthLeft = 1f;
-                //cdescuento.BorderWidthTop = 1f;
-                cdescuento.Padding = 2;
-                TableValor.AddCell(cdescuento);
-
-                PdfPCell celcdescuento = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.descuento), _standarTextoNegrita));
-                celcdescuento.Border = 0;
-                // cCeldaSubtotal.Colspan = 2
-                celcdescuento.HorizontalAlignment = 2;
-                celcdescuento.BorderWidthRight = 1f;
-                // celcdescuento.BorderWidthTop = 1f;
-                celcdescuento.Padding = 2;
-                TableValor.AddCell(celcdescuento);
-
-
-                PdfPCell cTituloIgv = new PdfPCell(new Phrase("Total I.G.V (18%)", _standarTextoNegrita));
-                cTituloIgv.Border = 0;
-                // cTituloIgv.Colspan = 4;
-                cTituloIgv.HorizontalAlignment = 0; // 0 = izquierda, 1 = centro, 2 = derecha
-                cTituloIgv.BorderWidthLeft = 1f;
-                cTituloIgv.Padding = 2;
-                TableValor.AddCell(cTituloIgv);
-
-                PdfPCell cCeldaIgv = new PdfPCell(new Phrase(string.Format("{0:n}", imprimir[0].Venta.igv), _standarTextoNegrita));
-                cCeldaIgv.Border = 0;
-                cCeldaIgv.HorizontalAlignment = 2;
-                cCeldaIgv.BorderWidthRight = 1f;
-                cCeldaIgv.Padding = 2;
-                TableValor.AddCell(cCeldaIgv);
-                */
+                 
                 PdfPCell cTituloImporte = new PdfPCell(new Phrase("IMPORTE TOTAL ", _standarTextoNegrita));
                 cTituloImporte.Border = 0;
                 // cTituloImporte.Colspan = 4;
