@@ -32,6 +32,7 @@ namespace SIS.Entity
         public int TotalR { get; set; }
         public int TotalPagina { get; set; }
         public string Observacion { get; set; }
+        public string contenedor { get; set; }
         //21/10/2020 - Day
         public float precioEntrada { get; set; }
         public float costoEntrada { get; set; }

@@ -493,7 +493,8 @@ $(function () {
                 SubTotal: $("#subtotales").val(),
                 Total: $("#Totales").val(),
                 IGV: $("#igv").val(),
-                Observacion: "-"
+                Observacion: "-",
+                contenedor: $("#txtcontenedor").val()
             }
 
             $.ajax({
@@ -690,6 +691,7 @@ function LimpiarConteniedo() {
     $("#Totales").val(0);
     $("#hMonedaComprobante").html('SOLES');
     $("#MontoIGV").val();
+    $("#txtcontenedor").val('')
 
     Lista.Vars.Detalle = [];
     var $tb = $('#tbDetalle');

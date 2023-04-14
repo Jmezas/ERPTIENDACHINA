@@ -92,9 +92,7 @@ $(function () {
 
 
 function ListaOC() {
-    var Filtro = $("#txtBusqueda").val(),
-     
-     
+    var Filtro = $("#txtBusqueda").val(),  
         numPaginas = parseInt($("#hdf_Pagina").val()),
         AllReg = $("#IdTotal").is(':checked') === true ? 0 : 1;
     let DesPagina;

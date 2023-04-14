@@ -173,17 +173,33 @@ $(function () {
 
 
 function ListaOC() {
+    var inicio = $('#txtFechaInicio').val().split(/\//);
+    inicio = [inicio[1], inicio[0], inicio[2]].join('/');
+
+    var Fin = $('#txtFechaFin').val().split(/\//);
+    Fin = [Fin[1], Fin[0], Fin[2]].join('/');
+
+    if (inicio == "//") {
+        inicio = "";
+    }
+    if (Fin == "//") {
+        Fin = "";
+    }
+
     var Filtro = $("#txtBusqueda").val(),
-        FechaInicio = $("#txtFechaInicio").val(),
-        FechaFin = $("#txtFechaInicio").val(),
+        FechaInicio = inicio,
+        FechaFin = Fin,
         numPaginas = parseInt($("#hdf_Pagina").val()),
         AllReg = $("#IdTotal").is(':checked') === true ? 0 : 1;
     let DesPagina;
+
     $.ajax({
         async: true,
         type: 'post',
         url: General.Utils.ContextPath('Gestion/ListaMovimientoCab'),
         dataType: 'json',
+        beforeSend: General.Utils.StartLoading,
+        complete: General.Utils.EndLoading,
         data: { Filltro: Filtro, FechaIncio: FechaInicio, FechaFin: FechaFin, numPag: numPaginas, allReg: AllReg, Cant: 10 },
         success: function (response) {
             console.log(response);
@@ -202,6 +218,7 @@ function ListaOC() {
                     $tb.find('tbody').append(
                         '<tr data-id="' + item["IdMovimiento"] + '">' +
                         '<td>' + item["Serie"] + '</td>' +
+                        '<td>' + item["contenedor"] + '</td>' +
                         '<td>' + item["Text"] + '</td>' +
                         '<td>' + item["FechaEmison"] + '</td>' +
                         '<td>' + item["Moneda"]["Nombre"] + '</td>' +

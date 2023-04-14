@@ -76,6 +76,7 @@ namespace SIS.Data
                     AddInParameter("@sNotaPago", oDatos.NotaPago, AllowNull);
                     AddInParameter("@CostoEnvio", oDatos.CostoEnvio);
                     AddInParameter("@idTipoVenta", 2);
+                    AddInParameter("@IdAlamcen", Detalle[0].Almacen.IdAlmacen);
                     AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                     ExecuteQuery();
                     sMensaje = GetOutput("@Mensaje").ToString();

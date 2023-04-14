@@ -123,7 +123,7 @@ namespace SIS.Data
                         {
                             EOrdenCompraDet obj = new EOrdenCompraDet();
                             obj.OrdenCompraCab.IdCompra = int.Parse(Reader["IdOrdenComCab"].ToString());
-                            obj.OrdenCompraCab.Proveedor.Id =int.Parse(Reader["iIdProveedor"].ToString());
+                            obj.OrdenCompraCab.Proveedor.Id = int.Parse(Reader["iIdProveedor"].ToString());
                             obj.OrdenCompraCab.Proveedor.Nombre = (Reader["Proveedor"].ToString());
                             obj.OrdenCompraCab.Proveedor.NroDocumento = (Reader["sNroDoc"].ToString());
                             obj.OrdenCompraCab.Proveedor.Direccion = (Reader["sDireccion"].ToString());
@@ -268,9 +268,9 @@ namespace SIS.Data
                     AddInParameter("@dFechaVencimiento", DateTime.Parse(oDatos.FechaPago));
                     AddInParameter("@iMoneda", (oDatos.Moneda.IdMoneda));
                     AddInParameter("@sIGV", oDatos.sIGV);
-                    AddInParameter("@IOrdenC", oDatos.IdCompra,AllowNull);
+                    AddInParameter("@IOrdenC", oDatos.IdCompra, AllowNull);
                     AddInParameter("@IProveedor", oDatos.Proveedor.IdProveedor);
-                    AddInParameter("@sObservacion", oDatos.Observacion,AllowNull);
+                    AddInParameter("@sObservacion", oDatos.Observacion, AllowNull);
                     AddInParameter("@User", Usuario);
                     AddInParameter("@IdAlmacen", oDatos.Almacen.IdAlmacen);
                     AddInParameter("@sAfecta", oDatos.AfectaStock);
@@ -281,7 +281,7 @@ namespace SIS.Data
                     AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                     ExecuteQuery();
                     sMensaje = GetOutput("@Mensaje").ToString();
-                    if (oDatos.AfectaStock==true)
+                    if (oDatos.AfectaStock == true)
                     {
                         string[] vMensaje = sMensaje.Split('|');
                         if (vMensaje[0].Equals("success"))
@@ -316,7 +316,7 @@ namespace SIS.Data
                         {
                             throw new Exception();
                         }
-                    } 
+                    }
                     tran.Commit();
                     return sMensaje;
                 }
@@ -331,7 +331,7 @@ namespace SIS.Data
         }
 
 
-        public List<EOrdenCompraCab> ImpirmirRegistroOC(string Filltro,string  FechaIncio,string FechaFin,int Afecta,int Inlcuye, int Empresa, int numPag, int allReg, int Cant)
+        public List<EOrdenCompraCab> ImpirmirRegistroOC(string Filltro, string FechaIncio, string FechaFin, int Afecta, int Inlcuye, int Empresa, int numPag, int allReg, int Cant)
         {
             List<EOrdenCompraCab> oDatos = new List<EOrdenCompraCab>();
             using (var Connection = GetConnection(BaseDeDatos))
@@ -357,14 +357,14 @@ namespace SIS.Data
                             EOrdenCompraCab obj = new EOrdenCompraCab();
                             obj.IdCompra = int.Parse(Reader["IdOrden"].ToString());
                             obj.Serie = Reader["SerieDoc"].ToString();
-                            obj.Documento.Nombre= Reader["TipoDoc"].ToString();
+                            obj.Documento.Nombre = Reader["TipoDoc"].ToString();
                             obj.Text = Reader["TipoPago"].ToString();
                             obj.FechaRegistro = Reader["dFechaCompra"].ToString();
                             obj.FechaPago = Reader["dFechaVencimiento"].ToString();
                             obj.sConcepto = Reader["Concepto"].ToString();
                             obj.Moneda.Nombre = Reader["Moneda"].ToString();
                             obj.icluyeIGV = Reader["IncluyeIGV"].ToString();
-                            obj.Numero= Reader["OC"].ToString();
+                            obj.Numero = Reader["OC"].ToString();
                             obj.Proveedor.Nombre = (Reader["sRazonSocial"].ToString());
                             obj.AfectaStockString = Reader["Afecta"].ToString();
                             obj.Cantidad = float.Parse(Reader["fCantidadTotalCab"].ToString());
@@ -372,7 +372,7 @@ namespace SIS.Data
                             obj.IGV = float.Parse(Reader["fIGVCab"].ToString());
                             obj.Total = float.Parse(Reader["fTotalCab"].ToString());
                             obj.TotalR = int.Parse(Reader["Total"].ToString());
-                            obj.TotalPagina = int.Parse(Reader["totalPaginas"].ToString()); 
+                            obj.TotalPagina = int.Parse(Reader["totalPaginas"].ToString());
                             oDatos.Add(obj);
                         }
                     }
@@ -408,7 +408,7 @@ namespace SIS.Data
                             obj.OrdenCompraCab.IdCompra = int.Parse(Reader["IdOrden"].ToString());
                             obj.OrdenCompraCab.Serie = Reader["SerieDoc"].ToString();
                             obj.OrdenCompraCab.Numero = Reader["OC"].ToString();
-                            obj.OrdenCompraCab.Documento.Nombre=(Reader["TipoDoc"].ToString());
+                            obj.OrdenCompraCab.Documento.Nombre = (Reader["TipoDoc"].ToString());
                             obj.OrdenCompraCab.Nombre = Reader["TipoPago"].ToString();
                             obj.OrdenCompraCab.FechaRegistro = Reader["dFechaCompra"].ToString();
                             obj.OrdenCompraCab.FechaPago = Reader["dFechaVencimiento"].ToString();
@@ -418,8 +418,8 @@ namespace SIS.Data
                             obj.OrdenCompraCab.Proveedor.Id = int.Parse(Reader["iIdTipoDoc"].ToString());
                             obj.OrdenCompraCab.Proveedor.Nombre = (Reader["Proveedor"].ToString());
                             obj.OrdenCompraCab.Proveedor.NroDocumento = (Reader["sNroDoc"].ToString());
-                            obj.OrdenCompraCab.Proveedor.Direccion = (Reader["sDireccion"].ToString());                  
-                            obj.OrdenCompraCab.Moneda.Nombre = Reader["Moneda"].ToString();            
+                            obj.OrdenCompraCab.Proveedor.Direccion = (Reader["sDireccion"].ToString());
+                            obj.OrdenCompraCab.Moneda.Nombre = Reader["Moneda"].ToString();
                             obj.OrdenCompraCab.Cantidad = float.Parse(Reader["Cantidad"].ToString());
                             obj.OrdenCompraCab.SubTotal = float.Parse(Reader["fSubTotalCab"].ToString());
                             obj.OrdenCompraCab.IGV = float.Parse(Reader["fIGVCab"].ToString());
@@ -470,12 +470,13 @@ namespace SIS.Data
                     AddInParameter("@iMoneda", oDatos.Moneda.IdMoneda);
                     AddInParameter("@IdAlmacen", (oDatos.Almacen.IdAlmacen));
                     AddInParameter("@IdOperacion", (oDatos.Documento.IdDocumento));
-                    AddInParameter("@fCantidad",(oDatos.Cantidad));
+                    AddInParameter("@fCantidad", (oDatos.Cantidad));
                     AddInParameter("@fSubTotal", oDatos.SubTotal);
                     AddInParameter("@fIGV", oDatos.IGV);
                     AddInParameter("@fTotal", oDatos.Total);
                     AddInParameter("@sObservacion", oDatos.Observacion);
-                    AddInParameter("@sCodReg", Usuario);             
+                    AddInParameter("@sCodReg", Usuario);
+                    AddInParameter("@contenedor", oDatos.contenedor, AllowNull);
                     AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                     ExecuteQuery();
                     sMensaje = GetOutput("@Mensaje").ToString();
@@ -540,7 +541,7 @@ namespace SIS.Data
                     CreateHelper(Connection);
                     AddInParameter("@Filltro", Filltro);
                     AddInParameter("@FechaInicio", FechaIncio);
-                    AddInParameter("@FechaFin", FechaFin); 
+                    AddInParameter("@FechaFin", FechaFin);
                     AddInParameter("@IdEmpresa", Empresa);
                     AddInParameter("@numPagina", numPag);
                     AddInParameter("@allReg", allReg);
@@ -552,16 +553,17 @@ namespace SIS.Data
                             EMovimiento obj = new EMovimiento();
                             obj.IdMovimiento = int.Parse(Reader["IdMovimiento"].ToString());
                             obj.FechaEmison = Reader["dFecEmision"].ToString();
-                            obj.Serie= Reader["SerieNum"].ToString();
+                            obj.Serie = Reader["SerieNum"].ToString();
                             obj.Text = Reader["TipoM"].ToString();
                             obj.Moneda.Nombre = Reader["Moneda"].ToString();
-                            obj.Documento.Nombre = Reader["Operacion"].ToString(); 
+                            obj.Documento.Nombre = Reader["Operacion"].ToString();
                             obj.Cantidad = float.Parse(Reader["fCantidad"].ToString());
                             obj.SubTotal = float.Parse(Reader["fSubTotalCab"].ToString());
                             obj.IGV = float.Parse(Reader["fIGVCab"].ToString());
                             obj.Total = float.Parse(Reader["fTotalCab"].ToString());
                             obj.TotalR = int.Parse(Reader["Total"].ToString());
                             obj.TotalPagina = int.Parse(Reader["totalPaginas"].ToString());
+                            obj.contenedor = Reader["contenedor"].ToString();
                             oDatos.Add(obj);
                         }
                     }
@@ -589,19 +591,19 @@ namespace SIS.Data
                     SetQuery("LOG_ListaDetalleMovimiento");
                     CreateHelper(Connection);
                     AddInParameter("@IdMov", IdMov);
-            
+
                     using (var Reader = ExecuteReader())
                     {
                         while (Reader.Read())
                         {
                             EMovimientoDet obj = new EMovimientoDet();
                             obj.Movimiento.Id = int.Parse(Reader["IdMovimiento"].ToString());
-                            obj.Item= int.Parse(Reader["item"].ToString());
+                            obj.Item = int.Parse(Reader["item"].ToString());
                             obj.Material.Codigo = Reader["sCodMaterial"].ToString();
                             obj.Material.Nombre = Reader["sNomMaterial"].ToString();
                             obj.Material.Unidad.Nombre = Reader["sNombreUMD"].ToString();
                             obj.Material.Categoria.Nombre = Reader["Categoria"].ToString();
-                            obj.Cantidad= float.Parse(Reader["fCantidad"].ToString());
+                            obj.Cantidad = float.Parse(Reader["fCantidad"].ToString());
                             obj.Precio = float.Parse(Reader["fPrecio"].ToString());
                             obj.Total = int.Parse(Reader["Total"].ToString());
                             oDatos.Add(obj);
@@ -620,7 +622,7 @@ namespace SIS.Data
             }
         }
 
-        public List<EMovimientoDet> ListaStock(string Filtro, int empresa, int sucursal, int numPag , int allReg, int cantFill)
+        public List<EMovimientoDet> ListaStock(string Filtro, int empresa, int sucursal, int numPag, int allReg, int cantFill)
         {
             List<EMovimientoDet> oDatos = new List<EMovimientoDet>();
             using (var Connection = GetConnection(BaseDeDatos))
@@ -640,7 +642,7 @@ namespace SIS.Data
                     {
                         while (Reader.Read())
                         {
-                            EMovimientoDet obj = new EMovimientoDet(); 
+                            EMovimientoDet obj = new EMovimientoDet();
                             obj.Item = int.Parse(Reader["item"].ToString());
                             obj.Material.Codigo = Reader["sCodMaterial"].ToString();
                             obj.Material.Nombre = Reader["sNomMaterial"].ToString();
@@ -652,7 +654,7 @@ namespace SIS.Data
                             obj.Num = float.Parse(Reader["sStockMin"].ToString());
                             obj.Text = (Reader["notifi"].ToString());
                             obj.Total = int.Parse(Reader["Total"].ToString());
-                            obj.TotalPagina= int.Parse(Reader["totalPaginas"].ToString());
+                            obj.TotalPagina = int.Parse(Reader["totalPaginas"].ToString());
                             oDatos.Add(obj);
                         }
                     }

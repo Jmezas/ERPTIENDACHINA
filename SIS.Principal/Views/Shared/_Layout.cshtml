@@ -116,7 +116,7 @@
                                             <input type="hidden" id="sucursal" value=" @((Session["IdSucursal"]))" />
                                             @*<img width="42" class="rounded-circle" src="~/Imagenes/Usuario/@((Session["Usuario"] as EUsuario).Imagen)" alt="">*@
 
-                                            @if(((Session["Usuario"] as EUsuario).Imagen) == "" || ((Session["Usuario"] as EUsuario).Imagen) == null)
+                                            @*@if (((Session["Usuario"] as EUsuario).Imagen) == "" || ((Session["Usuario"] as EUsuario).Imagen) == null)
                                             {
                                                 <img width="42" class="rounded-circle" src="~/Imagenes/Usuario/avatar.jpg" alt="">
                                                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
@@ -125,7 +125,9 @@
                                             {
                                                 <img width="42" class="rounded-circle" src="~/Imagenes/Usuario/@((Session["Usuario"] as EUsuario).Imagen)" alt="">
                                                 <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                            }
+                                            }*@
+                                            <img width="42" class="rounded-circle" src="~/Imagenes/Usuario/avatar.jpg" alt="">
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             @*<div tabindex="-1" class="dropdown-divider"></div>

@@ -160,6 +160,8 @@ function ListaGeneral() {
         type: 'post',
         url: General.Utils.ContextPath('venta/ListaVenta'),
         dataType: 'json',
+        beforeSend: General.Utils.StartLoading,
+        complete: General.Utils.EndLoading,
         data: { filtro: Filtro, FechaIncio: FechaInicio, FechaFin: FechaFin, numPag: numPaginas, allReg: AllReg, Cant: 10, vendedor: vendedor },
         success: function (response) {
 
