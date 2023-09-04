@@ -63,8 +63,8 @@ namespace SIS.Data
                     AddInParameter("@nCaja", Material.PrecioCaja);
                     AddInParameter("@cantCaja", Material.CantCaja); 
                     AddInParameter("@tipoEmpresa", Material.tipoEmpresa); 
-                    AddInParameter("@nCuarto", Material.PrecioMedia);
-                    AddInParameter("@nMedia", Material.PrecioCuarto); 
+                    AddInParameter("@nCuarto", Material.PrecioCuarto);
+                    AddInParameter("@nMedia", Material.PrecioMedia); 
                     AddOutParameter("@Mensaje", (DbType)SqlDbType.VarChar);
                     ExecuteQuery();
                     var smensaje = GetOutput("@Mensaje").ToString();

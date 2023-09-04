@@ -30,7 +30,7 @@ var Lista = {
             dataType: 'json',
             data: { Acction: "DEPARTAMENTO", IdPais: '001', IdDep: "", IdProv: "", IdDis: "" },
             success: function (response) {
-                $("#lstDepartamento").append($('<option>', {value:0,text:'Seleccione'}));
+                $("#lstDepartamento").append($('<option>', { value: 0, text: 'Seleccione' }));
                 $("#lstDistrito").append($('<option>', { value: 0, text: 'Seleccione' }));
                 $("#lstProvincia").append($('<option>', { value: 0, text: 'Seleccione' }));
                 if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error 
@@ -50,10 +50,10 @@ $(function () {
     Lista.CargarCombo();
     Lista.CargarDepartamento();
 
-   
 
 
-    var table = $("#tbCliente").DataTable({ 
+
+    var table = $("#tbCliente").DataTable({
         select: true,
         pageLength: 10,
         processing: true,
@@ -75,23 +75,23 @@ $(function () {
                 "last": "&Uacute;timo"
             },
         },
-         
+
         "ajax": {
-            "url": General.Utils.ContextPath('Mantenimiento/ListaCliente'), 
+            "url": General.Utils.ContextPath('Mantenimiento/ListaCliente'),
             "type": "POST",
             "dataType": "JSON",
             "data": function (d) {
-                
+
             },
 
         },
         "columns": [
             { "data": "IdCliente", "name": "IdCliente" },
-            { "data": "Text", "name": "Text"  },
-            { "data": "NroDocumento", "name": "NroDocumento"},
+            { "data": "Text", "name": "Text" },
+            { "data": "NroDocumento", "name": "NroDocumento" },
             { "data": "Razonsocial", "name": "Razonsocial" },
-            { "data": "Telefono", "name": "Telefono"},
-            { "data": "Celular", "name": "Celular"},
+            { "data": "Telefono", "name": "Telefono" },
+            { "data": "Celular", "name": "Celular" },
             { "data": "Email", "name": "Email" },
             { "data": "Direccion" },
             {
@@ -246,7 +246,7 @@ $(function () {
             }
         }
 
-       
+
     });
     $("#tbCliente").on('click', 'tbody .Eliminar', function () {
         var data = table.row($(this).parents("tr")).data();
@@ -261,7 +261,7 @@ $(function () {
             showCancelButton: true,
             confirmButtonText: 'Confirmar',
             cancelButtonColor: '#d33',
-            cancelButtonText:'Cancelar',
+            cancelButtonText: 'Cancelar',
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -403,7 +403,7 @@ function BuscarSunat() {
         } else {
             $.ajax({
                 type: 'post',
-                url: General.Utils.ContextPath('Shared/SearchSunatRUCDNI'),
+                url: General.Utils.ContextPath('Shared/SearchSunatRUC'),
                 beforeSend: General.Utils.StartLoading,
                 complete: General.Utils.EndLoading,
                 data: {
@@ -415,17 +415,10 @@ function BuscarSunat() {
                     if (response == null) {
                         General.Utils.ShowMessage("error", "Nro. de ruc invalido, ingrese los datos manualmente");
                     } else {
-<<<<<<< HEAD
-
 
                         $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, " "));
                         $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " "));
-=======
- 
-                        
-                        $("#txtRazon").val(response.RazonSocial.replace(/\s+/g, ""));
-                        $("#txtDireccion").val(response.DomicilioFiscal.replace(/\s+/g, " ") );
->>>>>>> 5d740fdbb9cbbec8bfe225082b3ee373b2ac10d9
+
                     }
                 }
             });
@@ -458,12 +451,6 @@ function BuscarSunat() {
         }
     } else {
         General.Utils.ShowMessage(TypeMessage.Error, 'digite manualmente');
-<<<<<<< HEAD
-    } 
-}
- 
-=======
-    }
 
+    }
 }
->>>>>>> 5d740fdbb9cbbec8bfe225082b3ee373b2ac10d9
