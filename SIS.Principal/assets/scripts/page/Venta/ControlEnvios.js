@@ -69,7 +69,7 @@ $(function () {
             numPaginas = parseInt($("#hdf_Pagina").val()),
             AllReg = $("#IdTotal").is(':checked') === true ? 0 : 1,
             CantiFill = $("#TotalReg").val();
-        window.location.href = General.Utils.ContextPath('Venta/ReporteExcelControlEnvios?cliente=' + Filtro + "&FechaIncio=" + FechaInicio + "&FechaFin=" + FechaFin +
+        window.location.href = General.Utils.ContextPath('Venta/ReporteExcelControlEnvios?filtro=' + Filtro + "&FechaIncio=" + FechaInicio + "&FechaFin=" + FechaFin +
             "&numPag=" + numPaginas + "&allReg=" + AllReg + "&Cant=" + CantiFill + "&venta=" + 0);
     });
 

@@ -16,6 +16,7 @@ using ZXing;
 using System.Drawing.Imaging;
 using ZXing.Common;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 
 namespace SIS.Principal.Controllers
 {
@@ -3274,6 +3275,121 @@ namespace SIS.Principal.Controllers
 
         }
         #endregion
+
+        #region Reporte Excel control de envios
+        public ActionResult ReporteExcelControlEnvios(string filtro, string FechaIncio, string FechaFin, int numPag, int allReg, int Cant, int venta)
+        {
+            try
+            {
+                //Ruta de la plantilla
+                FileInfo fTemplateFile = new FileInfo(Server.MapPath("/") + "Reporte/Venta/excel/" + "ControlEnviosVentas.xlsx");
+
+                var Usuario = Authentication.UserLogued.Usuario;
+                int Empresa = Authentication.UserLogued.Empresa.Id;
+                int sucursal = Authentication.UserLogued.Sucursal.IdSucursal;
+
+                //Ruta del nuevo documento
+                FileInfo fNewFile = new FileInfo(Server.MapPath("/") + "Reporte/Venta/excel/" + "ControlEnviosVentas" + "_" + Usuario + ".xlsx");
+
+                List<EVenta> ListaCompra;
+                
+                ListaCompra = Venta.ListaVentaEnvios(filtro, Empresa, sucursal, FechaIncio, FechaFin, numPag, allReg, Cant);
+                
+                ExcelPackage pck = new ExcelPackage(fNewFile, fTemplateFile);
+
+                var ws = pck.Workbook.Worksheets[1];
+                ////** aqui
+                var path = Server.MapPath("/") + "assets/images/LogoDefault.png";
+
+                //int rowIndex = 0;//numeros
+                //int colIndex = 3; //letras
+                //int Height = 220;
+                //int Width = 120;
+
+                DateTime today = DateTime.Now;
+                ws.Cells[6, 2].Value = today;
+                ws.Cells[7, 2].Value = Usuario;
+                int iFilaDetIni = 10;
+                int starRow = 1;
+                double SubTotal = 0, IGV = 0, Total = 0, exonerada = 0, inafecta = 0, descuento = 0, envio = 0, totPagar = 0;
+                foreach (EVenta Detalle in ListaCompra)
+                {
+                    ws.Cells[iFilaDetIni + starRow, 1].Value = Detalle.serie;
+                    ws.Cells[iFilaDetIni + starRow, 2].Value = Detalle.numero;
+                    ws.Cells[iFilaDetIni + starRow, 3].Value = Detalle.Documento.Nombre;
+                    ws.Cells[iFilaDetIni + starRow, 4].Value = Detalle.cliente.Nombre;
+                    ws.Cells[iFilaDetIni + starRow, 5].Value = Detalle.cliente.NroDocumento;
+                    ws.Cells[iFilaDetIni + starRow, 6].Value = Detalle.moneda.Nombre;
+                    ws.Cells[iFilaDetIni + starRow, 7].Value = Detalle.fechaEmision;
+                    ws.Cells[iFilaDetIni + starRow, 8].Value = Math.Round(Convert.ToDouble(Detalle.cantidad), 2);
+                    ws.Cells[iFilaDetIni + starRow, 9].Value = Math.Round(Convert.ToDouble(Detalle.grabada), 2);
+                    ws.Cells[iFilaDetIni + starRow, 10].Value = Math.Round(Convert.ToDouble(Detalle.igv), 2);
+                    ws.Cells[iFilaDetIni + starRow, 11].Value = Math.Round(Convert.ToDouble(Detalle.total), 2);
+                    ws.Cells[iFilaDetIni + starRow, 12].Value = Math.Round(Convert.ToDouble(Detalle.descuento), 2);
+                    ws.Cells[iFilaDetIni + starRow, 13].Value = Math.Round(Convert.ToDouble(Detalle.CostoEnvio), 2);
+                    ws.Cells[iFilaDetIni + starRow, 14].Value = Math.Round(Convert.ToDouble(Detalle.total + Detalle.CostoEnvio), 2);
+                    ws.Cells[iFilaDetIni + starRow, 15].Value = Detalle.Envio.Nombre;
+                    ws.Cells[iFilaDetIni + starRow, 16].Value = Detalle.fechaEnvio;
+                    ws.Cells[iFilaDetIni + starRow, 17].Value = Detalle.EstadoEnvio;
+                    ws.Cells[iFilaDetIni + starRow, 18].Value = Detalle.Nombre;
+                    ws.Cells[iFilaDetIni + starRow, 19].Value = Detalle.observacion;
+                    ws.Cells[iFilaDetIni + starRow, 20].Value = Detalle.sCanalesVenta;
+
+                    SubTotal += Convert.ToDouble(Detalle.grabada);
+                    exonerada += Convert.ToDouble(Detalle.exonerada);
+                    inafecta += Convert.ToDouble(Detalle.inafecta);
+                    IGV += Convert.ToDouble(Detalle.igv);
+                    Total += Convert.ToDouble(Detalle.total);
+                    descuento += Convert.ToDouble(Detalle.descuento);
+                    envio += Convert.ToDouble(Detalle.CostoEnvio);
+                    totPagar += Convert.ToDouble(Detalle.total + Detalle.CostoEnvio);
+                    starRow++;
+                }
+
+                int Count = starRow + 1;
+                ws.Cells[iFilaDetIni + (Count - 1), 8].Value = "Totales";
+                ws.Cells[iFilaDetIni + (Count - 1), 9].Value = Math.Round(Convert.ToDouble(SubTotal), 2);
+                ws.Cells[iFilaDetIni + (Count - 1), 10].Value = Math.Round(Convert.ToDouble(IGV), 2);
+                ws.Cells[iFilaDetIni + (Count - 1), 11].Value = Math.Round(Convert.ToDouble(Total), 2);
+                ws.Cells[iFilaDetIni + (Count - 1), 12].Value = Math.Round(Convert.ToDouble(descuento), 2);
+                ws.Cells[iFilaDetIni + (Count - 1), 13].Value = Math.Round(Convert.ToDouble(envio), 2);
+                ws.Cells[iFilaDetIni + (Count - 1), 14].Value = Math.Round(Convert.ToDouble(totPagar), 2);
+
+                string modelRange = "A" + System.Convert.ToString(iFilaDetIni) + ":T" + (iFilaDetIni + Count - 1).ToString();
+                var modelTable = ws.Cells[modelRange];
+                modelTable.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                modelTable.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                modelTable.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                modelTable.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                //Guardando Archivo...
+                pck.Save();
+                //  Liberando...
+                pck.Dispose();
+
+                OfficeOpenXml.ExcelPackage pcks = new OfficeOpenXml.ExcelPackage(fNewFile, false);
+
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;  filename=" + "ReporteControlEnviosVentas" + "_" + Usuario + ".xlsx");
+
+                MemoryStream memoryStream = new MemoryStream();
+                pcks.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.End();
+                pcks.Dispose();
+
+                System.IO.File.Delete(fNewFile.FullName);
+                return View();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        #endregion
+
         private byte[] GenerateBarCodeZXing(string data)
         {
             var writer = new BarcodeWriter

@@ -18,6 +18,7 @@ namespace SIS.Entity
             Sucursal = new ESucursal();
             Comprobante = new EComprobanteFac();
             Almacen = new EAlmacen();
+            Envio= new ETipoEnvio();
         }
         public int IdVenta { get; set; }
         public EAlmacen Almacen { get; set; }

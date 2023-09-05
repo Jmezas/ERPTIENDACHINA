@@ -1277,10 +1277,11 @@ namespace SIS.Data
                             obj.CostoEnvio = float.Parse(Reader["fCostoEnvio"].ToString());
                             obj.Text = Reader["TipoPago"].ToString();//tipo de pago -- efecto, credito etc
                             obj.observacion = Reader["Observacion"].ToString();
-                            obj.Comprobante.Nombre = Reader["Serie"].ToString(); 
+                            obj.Comprobante.Nombre = Reader["Serie"].ToString();
+                            obj.sCanalesVenta = Reader["CanalVenta"].ToString();//Canal venta
                             obj.EstadoEnvio = Reader["EstadoEnvio"].ToString(); 
                             obj.fechaEnvio = Reader["dFechaEnvio"].ToString();
-
+                            obj.Envio.Nombre = Reader["Nombre"].ToString();
                             oDatos.Add(obj);
                         }
                     }
